@@ -21,10 +21,7 @@ public abstract class Environment {
         return Math.round(1.0f / dT);
     }
 
-    public void init () {
-
-    }
-
+    public abstract void init();
     public abstract void update(float dT);
     public abstract void render();
 }

@@ -9,6 +9,11 @@ public class Level extends Environment {
     }
 
     @Override
+    public void init() {
+
+    }
+
+    @Override
     public void update(float dT) {
 
     }
