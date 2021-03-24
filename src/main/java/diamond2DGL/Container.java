@@ -1,22 +1,15 @@
-package Diamond2DGL;
-
-import java.sql.Time;
-
+package diamond2DGL;
 import static org.lwjgl.glfw.GLFW.*;
 
 public class Container implements Runnable {
 
     private Display display;
-    private IGame game;
+    private Game game;
 
     private static final float START_TIME = System.nanoTime();
     private boolean running;
-    private int maxFPS;
-    private double update_cap;
 
-    public Container(int maxFPS, IGame game) {
-        this.maxFPS = maxFPS;
-        this.update_cap = 1.0 / this.maxFPS;
+    public Container(Game game) {
         this.running = false;
         this.game = game;
         this.display = Display.get();
@@ -27,20 +20,12 @@ public class Container implements Runnable {
         return display;
     }
 
-    public IGame getGame() {
+    public Game getGame() {
         return game;
     }
 
     public boolean isRunning() {
         return running;
-    }
-
-    public int getMaxFPS() {
-        return maxFPS;
-    }
-
-    public double getUpdate_cap() {
-        return update_cap;
     }
 
     //--METHODS--
@@ -53,26 +38,22 @@ public class Container implements Runnable {
     }
 
     public void stop() {
-
+        this.running = false;
     }
 
     public void run() {
         this.running = true;
-
-        boolean render = false;
         float beginTime = 0;
         float endTime = this.getTime();
         float dT = 0;
-        double unprocessedTime = 0;
-
-        int fps = 0;
 
         while (this.running) {
             // GAME UPDATE PROCEDURE
-            this.game.update(this, fps);
+            this.game.update(dT);
 
             // GAME RENDER PROCEDURE
             this.display.update();
+            this.game.render();
 
             endTime = this.getTime();
             dT = endTime - beginTime;

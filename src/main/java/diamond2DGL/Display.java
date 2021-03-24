@@ -1,4 +1,4 @@
-package Diamond2DGL;
+package diamond2DGL;
 
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;

@@ -1,4 +1,4 @@
-package Diamond2DGL;
+package diamond2DGL;
 
 public class Renderer {
 
