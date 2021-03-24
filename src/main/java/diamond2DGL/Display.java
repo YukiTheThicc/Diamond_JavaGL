@@ -94,10 +94,13 @@ public class Display {
         return Display.display;
     }
 
-    public void update() {
+    public void clear() {
         glfwPollEvents();
-        glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+        glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
+    }
+
+    public void update() {
         glfwSwapBuffers(this.glfwWindow);
     }
 

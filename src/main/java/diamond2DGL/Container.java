@@ -44,16 +44,17 @@ public class Container implements Runnable {
     public void run() {
         this.running = true;
         float beginTime = 0;
-        float endTime = this.getTime();
+        float endTime = 0;
         float dT = 0;
 
         while (this.running) {
             // GAME UPDATE PROCEDURE
+            this.display.clear();
             this.game.update(dT);
 
             // GAME RENDER PROCEDURE
-            this.display.update();
             this.game.render();
+            this.display.update();
 
             endTime = this.getTime();
             dT = endTime - beginTime;
