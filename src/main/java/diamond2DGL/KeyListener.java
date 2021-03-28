@@ -10,7 +10,7 @@ public class KeyListener {
     private static final int NUM_KEYS = 350;
 
     private static KeyListener listener;
-    private boolean keyPressed[]= new boolean[NUM_KEYS];
+    private boolean keyPressed[] = new boolean[NUM_KEYS];
 
     private KeyListener() {
 
@@ -23,7 +23,7 @@ public class KeyListener {
         return listener;
     }
 
-    public static  void keyCallback(long window, int key, int scancode, int action, int mods) {
+    public static void keyCallback(long window, int key, int scancode, int action, int mods) {
         if (action == GLFW_PRESS) {
             get().keyPressed[key] = true;
         } else if (action == GLFW_RELEASE) {
@@ -31,7 +31,7 @@ public class KeyListener {
         }
     }
 
-    public static boolean isKeyPressed (int keyCode) {
+    public static boolean isKeyPressed(int keyCode) {
         return get().keyPressed[keyCode];
     }
 }

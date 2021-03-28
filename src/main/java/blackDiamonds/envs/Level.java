@@ -19,7 +19,7 @@ public class Level extends Environment {
     }
 
     @Override
-    public void render() {
+    public void render(float dT) {
 
     }
 }

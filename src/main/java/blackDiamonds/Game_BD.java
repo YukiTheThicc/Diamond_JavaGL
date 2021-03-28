@@ -15,6 +15,7 @@ public class Game_BD extends Game {
             case 0:
                 this.setCurrentEnvironment(new Menu("Main Menu"));
                 this.getCurrentEnvironment().init();
+                this.getCurrentEnvironment().start();
                 break;
             case 1:
                 break;
