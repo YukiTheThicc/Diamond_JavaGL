@@ -46,7 +46,7 @@ public abstract class Environment {
 
     public abstract void update(float dT);
 
-    public abstract void render(float dT);
+    public abstract void render();
 
     public Camera camera() {
         return this.camera;

@@ -5,6 +5,7 @@ import diamond2DGL.Entity;
 import diamond2DGL.Environment;
 import diamond2DGL.Transform;
 import diamond2DGL.engComponents.SpriteRenderer;
+import diamond2DGL.utils.ResourceManager;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
@@ -35,6 +36,12 @@ public class Menu extends Environment {
                 this.addEntity(e);
             }
         }
+
+        loadResources();
+    }
+
+    public void loadResources() {
+        ResourceManager.getShader("src/main/resources/shaders/default.glsl");
     }
 
     @Override
@@ -42,10 +49,11 @@ public class Menu extends Environment {
         for (Entity e : this.entities) {
             e.update(dT);
         }
+        System.out.println(this.getFPS(dT));
     }
 
     @Override
-    public void render(float dT) {
+    public void render() {
         this.renderer.render(this.camera);
     }
 }

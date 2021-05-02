@@ -28,7 +28,7 @@ public abstract class Game {
         this.currentEnvironment.update(dT);
     }
 
-    public void render(float dT) {
-        this.currentEnvironment.render(dT);
+    public void render() {
+        this.currentEnvironment.render();
     }
 }

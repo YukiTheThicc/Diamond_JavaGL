@@ -16,8 +16,8 @@ public class Display {
     private long glfwWindow;
 
     private Display() {
-        this.x = 480;
-        this.y = 270;
+        this.x = 1600;
+        this.y = 900;
 
         GLFWErrorCallback.createPrint(System.err).set();
 
@@ -95,12 +95,12 @@ public class Display {
     }
 
     public void clear() {
-        glfwPollEvents();
-        glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
     }
 
     public void update() {
+        glfwPollEvents();
         glfwSwapBuffers(this.glfwWindow);
     }
 
