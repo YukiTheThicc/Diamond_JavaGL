@@ -14,13 +14,14 @@ public class Game_BD extends Game {
         switch (envCode) {
             case 0:
                 this.setCurrentEnvironment(new Menu("Main Menu"));
-                this.getCurrentEnvironment().init();
-                this.getCurrentEnvironment().start();
                 break;
             case 1:
                 break;
             default:
                 assert false : "Weird Environment Token '" + envCode + "'";
         }
+        this.getCurrentEnvironment().load();
+        this.getCurrentEnvironment().init();
+        this.getCurrentEnvironment().start();
     }
 }

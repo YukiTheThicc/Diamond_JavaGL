@@ -10,11 +10,14 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Display {
 
+    // ATTRIBUTES
     private int x, y;
     private String title = "Diamond2DGL v0.0.1[PRE-ALPHA]";
     private static Display display = null;
     private long glfwWindow;
+    private ImGUILayer imGUILayer;
 
+    // CONSTRUCTORS
     private Display() {
         this.x = 1600;
         this.y = 900;
@@ -40,6 +43,11 @@ public class Display {
         glfwSetMouseButtonCallback(this.glfwWindow, MouseListener::mouseButtonCallback);
         glfwSetScrollCallback(this.glfwWindow, MouseListener::mouseScrollCallback);
         glfwSetKeyCallback(this.glfwWindow, KeyListener::keyCallback);
+        /* Chaos ensues if this is uncommented, uncomment at your own will */
+        /*glfwSetWindowSizeCallback(this.glfwWindow, (w, newX, newY) -> {
+            Display.setWidth(newX);
+            Display.setHeight(newY);
+        });*/
 
         // Make the OpenGL current context the engine window
         glfwMakeContextCurrent(this.glfwWindow);
@@ -49,34 +57,24 @@ public class Display {
         glfwShowWindow(this.glfwWindow);
         // Makes the OpenGL bindings available for use
         GL.createCapabilities();
+
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+        this.imGUILayer = new ImGUILayer(this.glfwWindow);
+        this.imGUILayer.initImGui();
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
+    // GETTERS & SETTERS
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public static Display getDisplay() {
         return display;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public static void setDisplay(Display display) {
@@ -87,6 +85,23 @@ public class Display {
         return glfwWindow;
     }
 
+    public static int getWidth() {
+        return get().x;
+    }
+
+    public static int getHeight() {
+        return get().y;
+    }
+
+    public static void setWidth(int newX) {
+        get().x = newX;
+    }
+
+    public static void setHeight(int newY) {
+        get().y = newY;
+    }
+
+    // METHODS
     public static Display get() {
         if (Display.display == null) {
             Display.display = new Display();
@@ -95,12 +110,13 @@ public class Display {
     }
 
     public void clear() {
+        glfwPollEvents();
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
     }
 
-    public void update() {
-        glfwPollEvents();
+    public void update(float dT, Environment currentEnv) {
+        this.imGUILayer.update(dT, currentEnv);
         glfwSwapBuffers(this.glfwWindow);
     }
 

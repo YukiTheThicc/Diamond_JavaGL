@@ -1,0 +1,11 @@
+========================================================================================================================
+                        TODO - Potential future features or modifications should be listed here
+========================================================================================================================
+
+    ================            ========================================================================================
+        STATUS                      ACTION/FEATURE/MODIFICATION DETAILS
+    ================            ========================================================================================
+
+ *      ON HOLD                     MAKE RENDERBATCH TAKE MAX TEXTURES IN CONSTRUCTOR
+ *      ON HOLD                     MAKE RENDER TAKE MAX BATCHES IN CONSTRUCTOR
+ *      ON HOLD                     MAKE RENDERBATCH TAKE ATTRIBUTE SIZES IN CONSTRUCTOR

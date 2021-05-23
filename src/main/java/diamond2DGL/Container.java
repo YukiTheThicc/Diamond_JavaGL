@@ -1,7 +1,5 @@
 package diamond2DGL;
 
-import diamond2DGL.utils.Time;
-
 import static org.lwjgl.glfw.GLFW.*;
 
 public class Container implements Runnable {
@@ -17,7 +15,6 @@ public class Container implements Runnable {
     }
 
     // --GETTERS AND SETTERS--
-
     public Display getDisplay() {
         return display;
     }
@@ -41,21 +38,22 @@ public class Container implements Runnable {
 
     public void run() {
         this.running = true;
-        float btn = Time.getTimeNano();
-        float etn = Time.getTimeNano();
-        float dtn = 0f;
+        float bt = (float) glfwGetTime();
+        float et = (float) glfwGetTime();
+        float dt = 0f;
 
         while (this.running) {
             this.display.clear();
-            this.game.update(dtn);
+            this.game.update(dt);
             this.game.render();
-            this.display.update();
+            this.display.update(dt, this.game.getCurrentEnvironment());
 
-            etn = Time.getTimeNano();
-            dtn = etn - btn;
-            btn = etn;
+            et = (float) glfwGetTime();
+            dt = et - bt;
+            bt = et;
             this.running = !this.shouldClose();
         }
+        this.getGame().getCurrentEnvironment().saveExit();
         this.dispose();
     }
 

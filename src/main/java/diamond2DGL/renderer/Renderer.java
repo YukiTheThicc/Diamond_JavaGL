@@ -2,14 +2,14 @@ package diamond2DGL.renderer;
 
 import diamond2DGL.Camera;
 import diamond2DGL.Entity;
-import diamond2DGL.engComponents.RenderBatch;
 import diamond2DGL.engComponents.SpriteRenderer;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class Renderer {
-
     private final int MAX_BATCH_SIZE = 1024;
     private List<RenderBatch> batches;
 
@@ -24,25 +24,29 @@ public class Renderer {
         }
     }
 
-    private void add(SpriteRenderer spr) {
+    private void add(SpriteRenderer sprite) {
         boolean added = false;
         for (RenderBatch batch : batches) {
-            if (batch.hasSpace()) {
-                batch.addSprite(spr);
-                added = true;
-                break;
+            if (!batch.isSpriteFull() && batch.getzIndex() == sprite.parent.getzIndex()) {
+                Texture texture = sprite.getTexture();
+                if (texture == null || (!batch.isTextureFull() || batch.hasTexture(texture))) {
+                    batch.addSprite(sprite);
+                    added = true;
+                    break;
+                }
             }
         }
         if (!added) {
-            RenderBatch batch = new RenderBatch(MAX_BATCH_SIZE);
+            RenderBatch batch = new RenderBatch(MAX_BATCH_SIZE, sprite.parent.getzIndex());
             batch.start();
             batches.add(batch);
-            batch.addSprite(spr);
+            batch.addSprite(sprite);
+            Collections.sort(batches);
         }
     }
 
     public void render(Camera camera) {
-        for(RenderBatch batch : batches) {
+        for (RenderBatch batch : batches) {
             batch.render(camera);
         }
     }
