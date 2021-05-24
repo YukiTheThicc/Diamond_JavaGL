@@ -1,10 +1,5 @@
 package diamond2DGL.engComponents;
 
-import diamond2DGL.Component;
-import diamond2DGL.Entity;
-
-import java.sql.SQLOutput;
-
 public class FontRenderer extends Component {
 
     public FontRenderer() {

@@ -4,13 +4,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import diamond2DGL.GSONDeserializers.ComponentDeserializer;
 import diamond2DGL.GSONDeserializers.EntityDeserializer;
+import diamond2DGL.engComponents.Component;
 import diamond2DGL.renderer.Renderer;
 import imgui.ImGui;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -110,10 +110,27 @@ public abstract class Environment {
             e.printStackTrace();
         }
         if (!inFile.equals("")) {
+            int maxEntityId = -1;
+            int maxCompId = -1;
             Entity[] entities = gson.fromJson(inFile, Entity[].class);
             for (int i = 0; i < entities.length; i++) {
                 addEntity(entities[i]);
+
+                for (Component c : entities[i].getComponents()) {
+                    if (c.getUid() > maxCompId) {
+                        maxCompId = c.getUid();
+                    }
+                }
+
+                if (entities[i].getUid() > maxEntityId) {
+                    maxEntityId = entities[i].getUid();
+                }
             }
+
+            maxEntityId++;
+            maxCompId++;
+            Entity.init(maxEntityId);
+            Component.init(maxCompId);
             this.loadedEnvironment = true;
         }
     }

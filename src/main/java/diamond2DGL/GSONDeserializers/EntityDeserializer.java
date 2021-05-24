@@ -1,7 +1,7 @@
 package diamond2DGL.GSONDeserializers;
 
 import com.google.gson.*;
-import diamond2DGL.Component;
+import diamond2DGL.engComponents.Component;
 import diamond2DGL.Entity;
 import diamond2DGL.Transform;
 

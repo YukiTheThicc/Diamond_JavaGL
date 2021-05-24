@@ -1,14 +1,9 @@
 package diamond2DGL.engComponents;
 
-import diamond2DGL.Component;
-
 import diamond2DGL.Transform;
 import diamond2DGL.renderer.Texture;
-import imgui.ImGui;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-
-import java.util.Vector;
 
 public class SpriteRenderer extends Component {
 

@@ -1,11 +1,16 @@
 package diamond2DGL;
 
+import diamond2DGL.engComponents.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Entity {
 
     // ATTRIBUTES
+    private static int ID_COUNTER = 0;
+
+    private int uid = -1;
     private String name;
     private List<Component> components;
     private int zIndex;
@@ -13,18 +18,13 @@ public class Entity {
 
 
     // CONSTRUCTORS
-    public Entity(String name) {
-        this.name = name;
-        this.components = new ArrayList<>();
-        this.zIndex = 0;
-        this.transform = new Transform();
-    }
-
     public Entity(String name, Transform transform, int zIndex) {
         this.name = name;
         this.components = new ArrayList<>();
         this.zIndex = zIndex;
         this.transform = transform;
+
+        this.uid = ID_COUNTER++;
     }
 
     // GETTERS & SETTERS
@@ -38,6 +38,10 @@ public class Entity {
 
     public int getzIndex() {
         return zIndex;
+    }
+
+    public List<Component> getComponents() {
+        return components;
     }
 
     // METHODS
@@ -66,6 +70,7 @@ public class Entity {
     }
 
     public void addComponent(Component c) {
+        c.generateId();
         this.components.add(c);
         c.parent = this;
     }
@@ -86,5 +91,13 @@ public class Entity {
         for (Component c : components) {
             c.imgui();
         }
+    }
+
+    public static void init(int maxId) {
+        ID_COUNTER = maxId;
+    }
+
+    public int getUid() {
+        return this.uid;
     }
 }

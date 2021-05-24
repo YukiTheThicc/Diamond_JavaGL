@@ -1,18 +1,17 @@
 package blackDiamonds.envs;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import blackDiamonds.EntityGenerator;
 import diamond2DGL.*;
-import diamond2DGL.GSONDeserializers.ComponentDeserializer;
-import diamond2DGL.GSONDeserializers.EntityDeserializer;
-import diamond2DGL.engComponents.RigidBody;
-import diamond2DGL.engComponents.SpriteRenderer;
-import diamond2DGL.engComponents.SpriteSheet;
+import diamond2DGL.engComponents.*;
 import diamond2DGL.utils.AssetManager;
 import imgui.ImGui;
+import imgui.ImVec2;
 import org.joml.Vector2f;
 
 public class Menu extends Environment {
+
+    private SpriteSheet sprites;
+    MouseControls mouseControls = new MouseControls();
 
     public Menu(String name) {
         super(name);
@@ -27,8 +26,6 @@ public class Menu extends Environment {
             return;
         }
 
-        SpriteSheet sprites = AssetManager.getSpriteSheet("assets/testing/spritesheet.png");
-
         Entity entity1 = new Entity("Entity 1",
                 new Transform(new Vector2f(100, 100), new Vector2f(256, 256)), 4);
         SpriteRenderer spriteRenderer1 = new SpriteRenderer();
@@ -40,29 +37,22 @@ public class Menu extends Environment {
         Entity entity2 = new Entity("Entity 2",
                 new Transform(new Vector2f(500, 100), new Vector2f(256, 256)), -2);
         SpriteRenderer spriteRenderer2 = new SpriteRenderer();
-        spriteRenderer2.setSprite(sprites.getSprite(0));
+        spriteRenderer2.setSprite(sprites.getSprite(1));
         entity2.addComponent(spriteRenderer2);
         this.addEntity(entity2);
-
-        Gson gson = new GsonBuilder()
-                .setPrettyPrinting()
-                .registerTypeAdapter(Component.class, new ComponentDeserializer())
-                .registerTypeAdapter(Entity.class, new EntityDeserializer())
-                .create();
-        String res = gson.toJson(entity1);
-        System.out.println(res);
     }
 
     public void loadResources() {
         AssetManager.getShader("assets/shaders/default.glsl");
-
-        AssetManager.addSpriteSheet("assets/testing/spritesheet.png",
-                new SpriteSheet(AssetManager.getTexture("assets/testing/spritesheet.png"),
-                        16, 16, 26, 0));
+        AssetManager.addSpriteSheet("assets/testing/decorationsAndBlocks.png",
+                new SpriteSheet(AssetManager.getTexture("assets/testing/decorationsAndBlocks.png"),
+                        16, 16, 81, 0));
+        sprites = AssetManager.getSpriteSheet("assets/testing/decorationsAndBlocks.png");
     }
 
     @Override
     public void update(float dT) {
+        mouseControls.update(dT);
         entities.get(0).transform.position.x += 10*dT;
         for (Entity e : this.entities) {
             e.update(dT);
@@ -78,7 +68,36 @@ public class Menu extends Environment {
     public void imgui() {
         ImGui.begin("YAYEYYEET");
 
+        ImVec2 windowPos = new ImVec2();
+        ImGui.getWindowPos(windowPos);
+        ImVec2 windowSize = new ImVec2();
+        ImGui.getWindowSize(windowSize);
+        ImVec2 itemSpacing = new ImVec2();
+        ImGui.getStyle().getItemSpacing(itemSpacing);
 
+        float windowX2 = windowPos.x + windowSize.x;
+        for (int i = 0; i < this.sprites.size(); i++) {
+            Sprite sprite = sprites.getSprite(i);
+            float sprWidth = sprite.getWidth() * 4;
+            float sprHeight = sprite.getHeight() * 4;
+            int id = sprite.getTexId();
+            Vector2f[] texCoords = sprite.getTexCoords();
+
+            ImGui.pushID(i);
+            if (ImGui.imageButton(id, sprWidth, sprHeight, texCoords[0].x, texCoords[0].y, texCoords[2].x, texCoords[2].y)) {
+                Entity tile = EntityGenerator.generateTile(sprite, sprWidth, sprHeight);
+                mouseControls.pickupEntity(tile);
+            }
+            ImGui.popID();
+
+            ImVec2 lastButtonPos = new ImVec2();
+            ImGui.getItemRectMax(lastButtonPos);
+            float lastButtonX2 = lastButtonPos.x;
+            float nextButtonX2 = lastButtonX2 + itemSpacing.x +sprWidth;
+            if (i + 1 < sprites.size() && nextButtonX2 < windowX2) {
+                ImGui.sameLine();
+            }
+        }
 
         ImGui.end();
     }

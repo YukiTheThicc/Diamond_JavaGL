@@ -1,7 +1,7 @@
 package diamond2DGL.GSONDeserializers;
 
 import com.google.gson.*;
-import diamond2DGL.Component;
+import diamond2DGL.engComponents.Component;
 
 import java.lang.reflect.Type;
 

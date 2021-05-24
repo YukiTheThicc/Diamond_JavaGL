@@ -1,18 +1,26 @@
 package diamond2DGL;
 
+import org.joml.Vector4f;
+
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 
+/*
+ * SINGLETON CLASS
+ */
 public class MouseListener {
 
+    // CONSTANTS
     private static final int NUM_BUTTONS = 3;
 
+    // ATTRIBUTES
     private static MouseListener listener;
     private double sX, sY;
     private double posX, posY, lastX, lastY;
     private boolean buttonsPressed[] = new boolean[NUM_BUTTONS];
     private boolean isDragging;
 
+    // CONSTRUCTORS
     private MouseListener() {
         this.sX = 0.0;
         this.sY = 0.0;
@@ -22,6 +30,7 @@ public class MouseListener {
         this.lastY = 0.0;
     }
 
+    // METHODS
     public static MouseListener get() {
         if (MouseListener.listener == null) {
             MouseListener.listener = new MouseListener();
@@ -84,6 +93,26 @@ public class MouseListener {
 
     public static float getScrollY() {
         return (float) get().sY;
+    }
+
+    public static float getOrthoX() {
+        float currentX = getX();
+        currentX = (currentX / (float)Display.getWidth()) * 2.0f - 1.0f;
+        Vector4f tmp = new Vector4f(currentX, 0, 0, 1);
+        Environment currentEnv = Container.get().getGame().getCurrentEnvironment();
+        tmp.mul(currentEnv.getCamera().getInvProj()).mul(currentEnv.getCamera().getInvView());
+        currentX = tmp.x;
+        return currentX;
+    }
+
+    public static float getOrthoY() {
+        Environment currentEnv = Container.get().getGame().getCurrentEnvironment();
+        float currentY = Display.getHeight() - getY();
+        currentY = (currentY / (float)Display.getHeight()) * 2.0f - 1.0f;
+        Vector4f tmp = new Vector4f(0, currentY, 0, 1);
+        tmp.mul(currentEnv.getCamera().getInvProj()).mul(currentEnv.getCamera().getInvView());
+        currentY = tmp.y;
+        return currentY;
     }
 
     public static boolean isDragging() {

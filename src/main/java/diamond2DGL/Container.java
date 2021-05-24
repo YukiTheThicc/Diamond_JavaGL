@@ -2,20 +2,26 @@ package diamond2DGL;
 
 import static org.lwjgl.glfw.GLFW.*;
 
+/*
+* SINGLETON - Game container class
+*/
 public class Container implements Runnable {
 
-    private final Display display;
+    // ATTRIBUTES
+    private static Container container = null;
     private final Game game;
+    private final Display display;
     private boolean running;
 
+    // CONSTRUCTOR
     public Container(Game game) {
         this.running = false;
         this.game = game;
         this.display = Display.get();
     }
 
-    // --GETTERS AND SETTERS--
-    public Display getDisplay() {
+    // GETTERS AND SETTERS
+    private Display getDisplay() {
         return display;
     }
 
@@ -27,7 +33,15 @@ public class Container implements Runnable {
         return running;
     }
 
-    //--METHODS--
+    // METHODS
+    public static void init(Game game) {
+        container = new Container(game);
+    }
+
+    public static Container get() {
+        return container;
+    }
+
     private boolean shouldClose() {
         return glfwWindowShouldClose(this.display.getGlfwWindow());
     }

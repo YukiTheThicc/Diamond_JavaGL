@@ -1,61 +1,79 @@
 [
   {
+    "uid": 0,
     "name": "Entity 1",
     "components": [
       {
         "type": "diamond2DGL.engComponents.SpriteRenderer",
         "properties": {
           "color": {
-            "x": 111.0,
-            "y": -98.0,
-            "z": 23.0,
-            "w": -167.0
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
           },
           "sprite": {
+            "width": 16.0,
+            "height": 16.0,
             "texture": {
-              "path": "assets/testing/spritesheet.png",
+              "path": "assets/testing/decorationsAndBlocks.png",
               "ID": 2,
-              "width": 224,
-              "height": 32
+              "width": 112,
+              "height": 192
             },
             "texCoords": [
               {
-                "x": 0.071428575,
+                "x": 0.14285715,
                 "y": 1.0
               },
               {
-                "x": 0.071428575,
-                "y": 0.5
+                "x": 0.14285715,
+                "y": 0.9166667
               },
               {
                 "x": 0.0,
-                "y": 0.5
+                "y": 0.9166667
               },
               {
                 "x": 0.0,
                 "y": 1.0
               }
             ]
-          }
+          },
+          "uid": 0
         }
       },
       {
         "type": "diamond2DGL.engComponents.RigidBody",
         "properties": {
-          "colliderType": 270,
-          "friction": 169.5,
+          "colliderType": 0,
+          "friction": 0.5,
           "velocity": {
-            "x": -70.0,
-            "y": -70.5,
-            "z": -21.0
-          }
+            "x": 0.0,
+            "y": 0.5,
+            "z": 0.0
+          },
+          "uid": 1
+        }
+      },
+      {
+        "type": "diamond2DGL.engComponents.RigidBody",
+        "properties": {
+          "colliderType": 0,
+          "friction": 0.5,
+          "velocity": {
+            "x": 0.0,
+            "y": 0.5,
+            "z": 0.0
+          },
+          "uid": 3
         }
       }
     ],
     "zIndex": 4,
     "transform": {
       "position": {
-        "x": 1026.7635,
+        "x": 130.13469,
         "y": 100.0
       },
       "scale": {
@@ -65,6 +83,7 @@
     }
   },
   {
+    "uid": 1,
     "name": "Entity 2",
     "components": [
       {
@@ -77,31 +96,34 @@
             "w": 1.0
           },
           "sprite": {
+            "width": 16.0,
+            "height": 16.0,
             "texture": {
-              "path": "assets/testing/spritesheet.png",
+              "path": "assets/testing/decorationsAndBlocks.png",
               "ID": 2,
-              "width": 224,
-              "height": 32
+              "width": 112,
+              "height": 192
             },
             "texCoords": [
               {
-                "x": 0.071428575,
+                "x": 0.2857143,
                 "y": 1.0
               },
               {
-                "x": 0.071428575,
-                "y": 0.5
+                "x": 0.2857143,
+                "y": 0.9166667
               },
               {
-                "x": 0.0,
-                "y": 0.5
+                "x": 0.14285715,
+                "y": 0.9166667
               },
               {
-                "x": 0.0,
+                "x": 0.14285715,
                 "y": 1.0
               }
             ]
-          }
+          },
+          "uid": 2
         }
       }
     ],

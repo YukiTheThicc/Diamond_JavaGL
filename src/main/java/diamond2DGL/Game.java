@@ -2,11 +2,10 @@ package diamond2DGL;
 
 public abstract class Game {
 
-    private final Container container;
     private Environment currentEnvironment;
 
     public Game() {
-        this.container = new Container(this);
+        Container.init(this);
         this.selectEnvironment(0);
     }
 
@@ -19,7 +18,7 @@ public abstract class Game {
     }
 
     public void start() {
-        this.container.run();
+        Container.get().run();
     }
 
     public abstract void selectEnvironment(int envCode);

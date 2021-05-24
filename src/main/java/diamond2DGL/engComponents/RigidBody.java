@@ -1,6 +1,5 @@
 package diamond2DGL.engComponents;
 
-import diamond2DGL.Component;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 

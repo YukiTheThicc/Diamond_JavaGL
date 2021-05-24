@@ -30,6 +30,10 @@ public class Texture {
         return height;
     }
 
+    public int getID() {
+        return ID;
+    }
+
     // METHODS
     public void init(String path) {
         this.path = path;
