@@ -115,8 +115,8 @@ public class Display {
         glClear(GL_COLOR_BUFFER_BIT);
     }
 
-    public void update(float dT, Environment currentEnv) {
-        this.imGUILayer.update(dT, currentEnv);
+    public void update(float dT) {
+        this.imGUILayer.update(dT);
         glfwSwapBuffers(this.glfwWindow);
     }
 

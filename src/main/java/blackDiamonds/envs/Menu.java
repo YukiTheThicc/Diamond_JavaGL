@@ -11,7 +11,7 @@ import org.joml.Vector2f;
 public class Menu extends Environment {
 
     private SpriteSheet sprites;
-    MouseControls mouseControls = new MouseControls();
+    Entity testingStuff = new Entity("testingStuff", new Transform(new Vector2f()), 0);
 
     public Menu(String name) {
         super(name);
@@ -19,27 +19,10 @@ public class Menu extends Environment {
 
     @Override
     public void init() {
+        testingStuff.addComponent(new MouseControls());
+        testingStuff.addComponent(new GridLines());
         loadResources();
-        this.camera = new Camera(new Vector2f(-250, 0));
-        if (loadedEnvironment) {
-            this.activeEntity = entities.get(0);
-            return;
-        }
-
-        Entity entity1 = new Entity("Entity 1",
-                new Transform(new Vector2f(100, 100), new Vector2f(256, 256)), 4);
-        SpriteRenderer spriteRenderer1 = new SpriteRenderer();
-        spriteRenderer1.setSprite(sprites.getSprite(0));
-        entity1.addComponent(spriteRenderer1);
-        entity1.addComponent(new RigidBody());
-        this.addEntity(entity1);
-
-        Entity entity2 = new Entity("Entity 2",
-                new Transform(new Vector2f(500, 100), new Vector2f(256, 256)), -2);
-        SpriteRenderer spriteRenderer2 = new SpriteRenderer();
-        spriteRenderer2.setSprite(sprites.getSprite(1));
-        entity2.addComponent(spriteRenderer2);
-        this.addEntity(entity2);
+        this.camera = new Camera(new Vector2f(0, 0));
     }
 
     public void loadResources() {
@@ -52,8 +35,7 @@ public class Menu extends Environment {
 
     @Override
     public void update(float dT) {
-        mouseControls.update(dT);
-        entities.get(0).transform.position.x += 10*dT;
+        testingStuff.update(dT);
         for (Entity e : this.entities) {
             e.update(dT);
         }
@@ -78,15 +60,15 @@ public class Menu extends Environment {
         float windowX2 = windowPos.x + windowSize.x;
         for (int i = 0; i < this.sprites.size(); i++) {
             Sprite sprite = sprites.getSprite(i);
-            float sprWidth = sprite.getWidth() * 4;
-            float sprHeight = sprite.getHeight() * 4;
+            float sprWidth = sprite.getWidth() * 2;
+            float sprHeight = sprite.getHeight() * 2;
             int id = sprite.getTexId();
             Vector2f[] texCoords = sprite.getTexCoords();
 
             ImGui.pushID(i);
-            if (ImGui.imageButton(id, sprWidth, sprHeight, texCoords[0].x, texCoords[0].y, texCoords[2].x, texCoords[2].y)) {
-                Entity tile = EntityGenerator.generateTile(sprite, sprWidth, sprHeight);
-                mouseControls.pickupEntity(tile);
+            if (ImGui.imageButton(id, sprWidth, sprHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y)) {
+                Entity tile = EntityGenerator.generateTile(sprite, 32, 32);
+                testingStuff.getComponent(MouseControls.class).pickupEntity(tile);
             }
             ImGui.popID();
 

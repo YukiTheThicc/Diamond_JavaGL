@@ -196,11 +196,11 @@ public class ImGUILayer {
         glfwSetInputMode(glfwWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     }
 
-    public void update(float dT, Environment curretnEnv) {
+    public void update(float dT) {
         startFrame(dT);
 
         ImGui.newFrame();
-        curretnEnv.envImgui();
+        Container.getEnv().envImgui();
         ImGui.showDemoWindow();
         ImGui.render();
 

@@ -1,5 +1,7 @@
 package diamond2DGL;
 
+import diamond2DGL.renderer.DebugDraw;
+
 import static org.lwjgl.glfw.GLFW.*;
 
 /*
@@ -33,6 +35,14 @@ public class Container implements Runnable {
         return running;
     }
 
+    public static Environment getEnv() {
+        return Container.get().getGame().getCurrentEnvironment();
+    }
+
+    public static Camera getCamera() {
+        return Container.get().getGame().getCurrentEnvironment().getCamera();
+    }
+
     // METHODS
     public static void init(Game game) {
         container = new Container(game);
@@ -57,10 +67,14 @@ public class Container implements Runnable {
         float dt = 0f;
 
         while (this.running) {
+            DebugDraw.beginFrame();
             this.display.clear();
-            this.game.update(dt);
+            if (dt >= 0) {
+                this.game.update(dt);
+                DebugDraw.draw();
+            }
             this.game.render();
-            this.display.update(dt, this.game.getCurrentEnvironment());
+            this.display.update(dt);
 
             et = (float) glfwGetTime();
             dt = et - bt;

@@ -4,6 +4,7 @@ import diamond2DGL.Container;
 import diamond2DGL.Display;
 import diamond2DGL.Entity;
 import diamond2DGL.MouseListener;
+import diamond2DGL.utils.Settings;
 
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 
@@ -23,8 +24,10 @@ public class MouseControls extends Component{
     @Override
     public void update(float dT) {
         if (holdingEntity != null) {
-            holdingEntity.transform.position.x = MouseListener.getOrthoX() - 16;
-            holdingEntity.transform.position.y = MouseListener.getOrthoY() - 16;
+            holdingEntity.transform.position.x = MouseListener.getOrthoX();
+            holdingEntity.transform.position.y = MouseListener.getOrthoY();
+            holdingEntity.transform.position.x = (int)(holdingEntity.transform.position.x / Settings.GRID_WIDTH) * Settings.GRID_WIDTH;
+            holdingEntity.transform.position.y = (int)(holdingEntity.transform.position.y / Settings.GRID_HEIGHT) * Settings.GRID_HEIGHT;
 
             if (MouseListener.mouseButtonDown(GLFW_MOUSE_BUTTON_LEFT)) {
                 place();
