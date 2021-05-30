@@ -15,7 +15,7 @@ public class Entity {
     private List<Component> components;
     private int zIndex;
     public Transform transform;
-
+    private boolean toSerialize = true;
 
     // CONSTRUCTORS
     public Entity(String name, Transform transform, int zIndex) {
@@ -42,6 +42,18 @@ public class Entity {
 
     public List<Component> getComponents() {
         return components;
+    }
+
+    public boolean isToSerialize() {
+        return toSerialize;
+    }
+
+    public boolean setToSerialize() {
+        return toSerialize = true;
+    }
+
+    public void setNotToSerialize() {
+        this.toSerialize = false;
     }
 
     // METHODS

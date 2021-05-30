@@ -1,13 +1,16 @@
 package diamond2DGL;
 
+import diamond2DGL.editor.PickingTexture;
+import diamond2DGL.editor.PropertiesWindow;
+import diamond2DGL.editor.ViewPortWindow;
+import diamond2DGL.listeners.KeyListener;
+import diamond2DGL.listeners.MouseListener;
 import imgui.*;
-import imgui.callbacks.ImStrConsumer;
-import imgui.callbacks.ImStrSupplier;
-import imgui.enums.ImGuiBackendFlags;
-import imgui.enums.ImGuiConfigFlags;
-import imgui.enums.ImGuiKey;
-import imgui.enums.ImGuiMouseCursor;
+import imgui.callback.ImStrConsumer;
+import imgui.callback.ImStrSupplier;
+import imgui.flag.*;
 import imgui.gl3.ImGuiImplGl3;
+import imgui.type.ImBoolean;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -20,12 +23,22 @@ public class ImGUILayer {
     // LWJGL3 renderer (SHOULD be initialized)
     private final ImGuiImplGl3 imGuiGl3 = new ImGuiImplGl3();
     private String glslVersion = null; // We can initialize our renderer with different versions of the GLSL
+    private ViewPortWindow viewPortWindow;
+    private PropertiesWindow propertiesWindow;
 
     // CONSTRUCTORS
-    public ImGUILayer (long windowPtr) {
+    public ImGUILayer (long windowPtr, PickingTexture pickingTexture) {
         this.glfwWindow = windowPtr;
+        this.viewPortWindow = new ViewPortWindow();
+        this.propertiesWindow = new PropertiesWindow(pickingTexture);
     }
 
+    //GETTERS & SETTERS
+    public PropertiesWindow getPropertiesWindow() {
+        return  this.propertiesWindow;
+    }
+
+    // METHODS
     public void initImGui() {
         // IMPORTANT!!
         // This line is critical for Dear ImGui to work.
@@ -37,6 +50,7 @@ public class ImGUILayer {
 
         io.setIniFilename("imgui.ini"); // We don't want to save .ini file
         io.setConfigFlags(ImGuiConfigFlags.NavEnableKeyboard); // Navigation with keyboard
+        io.setConfigFlags(ImGuiConfigFlags.DockingEnable);
         io.setBackendFlags(ImGuiBackendFlags.HasMouseCursors); // Mouse cursors to display while resizing windows etc.
         io.setBackendPlatformName("imgui_java_impl_glfw");
 
@@ -120,7 +134,7 @@ public class ImGUILayer {
                 ImGui.setWindowFocus(null);
             }
 
-            if (!io.getWantCaptureMouse()) {
+            if (!io.getWantCaptureMouse() || viewPortWindow.getWantCaptureMouse()) {
                 MouseListener.mouseButtonCallback(w, button, action, mods);
             }
         });
@@ -128,6 +142,7 @@ public class ImGUILayer {
         glfwSetScrollCallback(glfwWindow, (w, xOffset, yOffset) -> {
             io.setMouseWheelH(io.getMouseWheelH() + (float) xOffset);
             io.setMouseWheel(io.getMouseWheel() + (float) yOffset);
+            MouseListener.mouseScrollCallback(w, xOffset, yOffset);
         });
 
         io.setSetClipboardTextFn(new ImStrConsumer() {
@@ -198,10 +213,13 @@ public class ImGUILayer {
 
     public void update(float dT) {
         startFrame(dT);
-
         ImGui.newFrame();
-        Container.getEnv().envImgui();
+        setupDockSpace();
+        Container.getEnv().imgui();
         ImGui.showDemoWindow();
+        viewPortWindow.imgui();
+        propertiesWindow.update(dT);
+        ImGui.end();
         ImGui.render();
 
         endFrame();
@@ -216,5 +234,22 @@ public class ImGUILayer {
     private void destroyImGui() {
         imGuiGl3.dispose();
         ImGui.destroyContext();
+    }
+
+    private void setupDockSpace() {
+        int windowFlags = ImGuiWindowFlags.MenuBar | ImGuiWindowFlags.NoDocking;
+
+        ImGui.setNextWindowPos(0.0f, 0.0f, ImGuiCond.Always);
+        ImGui.setNextWindowSize(Display.getWidth(), Display.getHeight());
+        ImGui.pushStyleVar(ImGuiStyleVar.WindowRounding, 0.0f);
+        ImGui.pushStyleVar(ImGuiStyleVar.WindowBorderSize, 0.0f);
+        windowFlags |= ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoResize
+                | ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoBringToFrontOnFocus | ImGuiWindowFlags.NoNavFocus;
+
+        ImGui.begin("DockSpace Demo", new ImBoolean(true), windowFlags);
+        ImGui.popStyleVar(2);
+
+        // DockSpace
+        ImGui.dockSpace(ImGui.getID("DockSpace"));
     }
 }

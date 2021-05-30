@@ -1,6 +1,5 @@
 package blackDiamonds.envs;
 
-import blackDiamonds.EntityGenerator;
 import diamond2DGL.*;
 import diamond2DGL.engComponents.*;
 import diamond2DGL.utils.AssetManager;
@@ -8,21 +7,29 @@ import imgui.ImGui;
 import imgui.ImVec2;
 import org.joml.Vector2f;
 
-public class Menu extends Environment {
+public class LevelEditorEnv extends Environment {
 
     private SpriteSheet sprites;
+    private SpriteSheet gizmos;
     Entity testingStuff = new Entity("testingStuff", new Transform(new Vector2f()), 0);
 
-    public Menu(String name) {
+    public LevelEditorEnv(String name) {
         super(name);
     }
 
     @Override
     public void init() {
+        loadResources();
+        sprites = AssetManager.getSpriteSheet("assets/testing/decorationsAndBlocks.png");
+        gizmos = AssetManager.getSpriteSheet("assets/testing/gizmos.png");
+
+        this.camera = new Camera(new Vector2f(0, 0));
         testingStuff.addComponent(new MouseControls());
         testingStuff.addComponent(new GridLines());
-        loadResources();
-        this.camera = new Camera(new Vector2f(0, 0));
+        testingStuff.addComponent(new EditorCamera(this.camera));
+        testingStuff.addComponent(new GizmoSystem(gizmos));
+
+        testingStuff.start();
     }
 
     public void loadResources() {
@@ -30,12 +37,23 @@ public class Menu extends Environment {
         AssetManager.addSpriteSheet("assets/testing/decorationsAndBlocks.png",
                 new SpriteSheet(AssetManager.getTexture("assets/testing/decorationsAndBlocks.png"),
                         16, 16, 81, 0));
-        sprites = AssetManager.getSpriteSheet("assets/testing/decorationsAndBlocks.png");
+        AssetManager.addSpriteSheet("assets/testing/gizmos.png",
+                new SpriteSheet(AssetManager.getTexture("assets/testing/gizmos.png"),
+                        24, 48, 3, 0));
+        for (Entity e : entities) {
+            if (e.getComponent(SpriteRenderer.class) != null) {
+                SpriteRenderer spr = e.getComponent(SpriteRenderer.class);
+                if (spr.getTexture() != null) {
+                    spr.setTexture(AssetManager.getTexture(spr.getTexture().getPath()));
+                }
+            }
+        }
     }
 
     @Override
     public void update(float dT) {
         testingStuff.update(dT);
+        this.camera.changeProjection();
         for (Entity e : this.entities) {
             e.update(dT);
         }
@@ -43,12 +61,16 @@ public class Menu extends Environment {
 
     @Override
     public void render() {
-        this.renderer.render(this.camera);
+        this.renderer.render();
     }
 
     @Override
     public void imgui() {
-        ImGui.begin("YAYEYYEET");
+        ImGui.begin("Level Editor Stuff");
+        testingStuff.imgui();
+        ImGui.end();
+
+        ImGui.begin("Tiles");
 
         ImVec2 windowPos = new ImVec2();
         ImGui.getWindowPos(windowPos);
@@ -67,7 +89,7 @@ public class Menu extends Environment {
 
             ImGui.pushID(i);
             if (ImGui.imageButton(id, sprWidth, sprHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y)) {
-                Entity tile = EntityGenerator.generateTile(sprite, 32, 32);
+                Entity tile = EntityFactory.createSpriteEntity(sprite, 32, 32);
                 testingStuff.getComponent(MouseControls.class).pickupEntity(tile);
             }
             ImGui.popID();

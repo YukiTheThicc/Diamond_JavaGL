@@ -1,9 +1,8 @@
 package diamond2DGL.engComponents;
 
 import diamond2DGL.Container;
-import diamond2DGL.Display;
 import diamond2DGL.Entity;
-import diamond2DGL.MouseListener;
+import diamond2DGL.listeners.MouseListener;
 import diamond2DGL.utils.Settings;
 
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;

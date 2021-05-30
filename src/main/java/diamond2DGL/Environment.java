@@ -14,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public abstract class Environment {
 
@@ -24,7 +25,7 @@ public abstract class Environment {
     protected Renderer renderer;
     protected Camera camera;
     protected List<Entity> entities;
-    protected Entity activeEntity = null;
+
 
     // CONSTRUCTORS
     public Environment(String name) {
@@ -40,6 +41,13 @@ public abstract class Environment {
 
     public Camera getCamera() {
         return this.camera;
+    }
+
+    public Entity getEntity(int id) {
+        Optional<Entity> result = this.entities.stream()
+                .filter(entity -> entity.getUid() == id)
+                .findFirst();
+        return result.orElse(null);
     }
 
     // METHODS
@@ -67,16 +75,6 @@ public abstract class Environment {
 
     public abstract void render();
 
-    public void envImgui() {
-        if (activeEntity != null) {
-            ImGui.begin("Inspector");
-            activeEntity.imgui();
-            ImGui.end();
-        }
-
-        imgui();
-    }
-
     public void imgui() {
 
     }
@@ -90,7 +88,13 @@ public abstract class Environment {
 
         try {
             FileWriter writer = new FileWriter("level.txt");
-            writer.write(gson.toJson(this.entities));
+            List<Entity> toSerialize = new ArrayList<>();
+            for (Entity e : entities) {
+                if (e.isToSerialize()) {
+                    toSerialize.add(e);
+                }
+            }
+            writer.write(gson.toJson(toSerialize));
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();

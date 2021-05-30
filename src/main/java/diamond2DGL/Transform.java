@@ -9,6 +9,7 @@ public class Transform {
 
     public Vector2f position;
     public Vector2f scale;
+    public float rotation = 0.0f;
 
     // CONSTRUCTORS
     public Transform() {

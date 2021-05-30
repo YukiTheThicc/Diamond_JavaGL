@@ -5,9 +5,11 @@ import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 public class Camera {
+
     // ATTRIBUTES
     private Matrix4f pMatrix, vMatrix, invProj, invView;
     private Vector2f projectionSize = new Vector2f(32.0f * 40.0f, 32.0f * 21.0f);
+    private float zoom = 1.0f;
     public Vector2f pos;
 
     // CONSTRUCTORS
@@ -25,6 +27,18 @@ public class Camera {
         return this.pMatrix;
     }
 
+
+
+    public Matrix4f getvMatrix() {
+        Vector3f cameraFront = new Vector3f(0.0f, 0.0f, -1.0f);
+        Vector3f cameraUp = new Vector3f(0.0f, 1.0f, 0.0f);
+        this.vMatrix.identity();
+        this.vMatrix.lookAt(new Vector3f(pos.x, pos.y, 20.0f),
+                cameraFront.add(pos.x, pos.y, 0.0f), cameraUp);
+        this.vMatrix.invert(invView);
+        return this.vMatrix;
+    }
+
     public Matrix4f getInvProj() {
         return invProj;
     }
@@ -37,22 +51,22 @@ public class Camera {
         return projectionSize;
     }
 
+    public float getZoom() {
+        return zoom;
+    }
+
+    public void setZoom(float zoom) {
+        this.zoom = zoom;
+    }
+
     // METHODS
     public void changeProjection() {
         pMatrix.identity();
-        pMatrix.ortho(0.0f, projectionSize.x, 0.0f, projectionSize.y, 0.0f, 100.0f);
+        pMatrix.ortho(0.0f, projectionSize.x * this.zoom, 0.0f, projectionSize.y * this.zoom, 0.0f, 100.0f);
         pMatrix.invert(invProj);
     }
 
-    public Matrix4f getvMatrix() {
-        Vector3f cameraFront = new Vector3f(0.0f, 0.0f, -1.0f);
-        Vector3f cameraUp = new Vector3f(0.0f, 1.0f, 0.0f);
-        this.vMatrix.identity();
-        this.vMatrix.lookAt(new Vector3f(pos.x, pos.y, 20.0f),
-                cameraFront.add(pos.x, pos.y, 0.0f), cameraUp);
-        this.vMatrix.invert(invView);
-        return this.vMatrix;
+    public void addZoom(float toAdd) {
+        this.zoom += toAdd;
     }
-
-
 }

@@ -1,6 +1,6 @@
 package blackDiamonds;
 
-import blackDiamonds.envs.Menu;
+import blackDiamonds.envs.LevelEditorEnv;
 import diamond2DGL.Game;
 
 public class Game_BD extends Game {
@@ -13,7 +13,7 @@ public class Game_BD extends Game {
     public void selectEnvironment(int envCode) {
         switch (envCode) {
             case 0:
-                this.setCurrentEnvironment(new Menu("Main Menu"));
+                this.setCurrentEnvironment(new LevelEditorEnv("Main Menu"));
                 break;
             case 1:
                 break;

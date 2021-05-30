@@ -1,4 +1,4 @@
-package diamond2DGL.physics.rigidbody;
+package diamond2DGL.physics;
 
 import diamond2DGL.physics.primitives.*;
 import diamond2DGL.renderer.Line;

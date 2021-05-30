@@ -1,6 +1,8 @@
 package diamond2DGL;
 
 import diamond2DGL.renderer.DebugDraw;
+import diamond2DGL.renderer.Renderer;
+import diamond2DGL.utils.AssetManager;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -67,14 +69,19 @@ public class Container implements Runnable {
         float dt = 0f;
 
         while (this.running) {
+            this.display.pollEvents();
+
+            this.display.texturePickingRender();
+
             DebugDraw.beginFrame();
             this.display.clear();
+
             if (dt >= 0) {
-                this.game.update(dt);
                 DebugDraw.draw();
+                this.game.update(dt);
+                this.game.render();
+                this.display.update(dt);
             }
-            this.game.render();
-            this.display.update(dt);
 
             et = (float) glfwGetTime();
             dt = et - bt;

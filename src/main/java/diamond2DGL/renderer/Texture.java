@@ -12,12 +12,27 @@ import static org.lwjgl.stb.STBImage.*;
 public class Texture {
 
     private String path;
-    private int ID;
+    private transient int ID;
     private int width;
     private int height;
 
     // CONSTRUCTORS
     public Texture() {
+        ID = -1;
+        width = -1;
+        height = -1;
+        path = "";
+    }
+
+    public Texture(int width, int height) {
+        this.path = "GENERATED";
+        this.ID = glGenTextures();
+        glBindTexture(GL_TEXTURE_2D, ID);
+
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
 
     }
 
@@ -34,11 +49,16 @@ public class Texture {
         return ID;
     }
 
+    public String getPath() {
+        return path;
+    }
+
     // METHODS
     public void init(String path) {
         this.path = path;
         this.ID = glGenTextures();
         glBindTexture(GL_TEXTURE_2D, ID);
+
         // Texture Parameters
         // Repeat texture on both directions
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -79,5 +99,14 @@ public class Texture {
 
     public void unbind() {
         glBindTexture(GL_TEXTURE_2D, 0);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) return false;
+        if (!(o instanceof Texture)) return false;
+        Texture tex = (Texture)o;
+        return tex.getWidth() == this.width && tex.getHeight() == this.height && tex.getID() == this.ID &&
+                tex.getPath().equals(this.path);
     }
 }

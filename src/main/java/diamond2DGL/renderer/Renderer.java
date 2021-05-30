@@ -1,22 +1,36 @@
 package diamond2DGL.renderer;
 
 import diamond2DGL.Camera;
+import diamond2DGL.Container;
 import diamond2DGL.Entity;
 import diamond2DGL.engComponents.SpriteRenderer;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 public class Renderer {
+
+    // ATTRIBUTES
     private final int MAX_BATCH_SIZE = 1024;
     private List<RenderBatch> batches;
+    private static Shader currentShader;
 
+    // CONSTRUCTORS
     public Renderer() {
         this.batches = new ArrayList<>();
     }
 
+    // GETTERS & SETTERS
+    public static Shader getBoundShader() {
+        return currentShader;
+    }
+
+    public static void bindShader(Shader shader) {
+        currentShader = shader;
+    }
+
+    // METHODS
     public void add(Entity e) {
         SpriteRenderer spr = e.getComponent(SpriteRenderer.class);
         if (spr != null) {
@@ -45,9 +59,10 @@ public class Renderer {
         }
     }
 
-    public void render(Camera camera) {
+    public void render() {
+        currentShader.use();
         for (RenderBatch batch : batches) {
-            batch.render(camera);
+            batch.render(Container.getCamera());
         }
     }
 }

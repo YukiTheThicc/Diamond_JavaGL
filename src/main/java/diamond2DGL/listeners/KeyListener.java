@@ -1,4 +1,4 @@
-package diamond2DGL;
+package diamond2DGL.listeners;
 
 
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;

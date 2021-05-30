@@ -2,7 +2,7 @@ package diamond2DGL.renderer;
 
 import diamond2DGL.Camera;
 import diamond2DGL.engComponents.SpriteRenderer;
-import diamond2DGL.utils.AssetManager;
+import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
@@ -27,17 +27,18 @@ public class RenderBatch implements Comparable<RenderBatch>{
     private final int COLOR_SIZE = 4;
     private final int TEX_COORDS_SIZE = 2;
     private final int TEX_ID_SIZE = 1;
+    private final int ENTITY_ID_SIZE = 1;
 
     // Attribute offsets in BYTES
     private final int POS_OFFSET = 0;
     private final int COLOR_OFFSET = POS_OFFSET + POS_SIZE * Float.BYTES;
     private final int TEXT_COORDS_OFFSET = COLOR_OFFSET + COLOR_SIZE * Float.BYTES;
     private final int TEX_ID_OFFSET = TEXT_COORDS_OFFSET + TEX_COORDS_SIZE * Float.BYTES;
-    private final int VERTEX_SIZE = POS_SIZE + COLOR_SIZE + TEX_COORDS_SIZE + TEX_ID_SIZE;
+    private final int ENTITY_ID_OFFSET = TEX_ID_OFFSET + TEX_ID_SIZE * Float.BYTES;
+    private final int VERTEX_SIZE = POS_SIZE + COLOR_SIZE + TEX_COORDS_SIZE + TEX_ID_SIZE + ENTITY_ID_SIZE;
     private final int VERTEX_SIZE_BYTES = VERTEX_SIZE * Float.BYTES;
 
     // Batch attributes
-
     private List<Texture> textures;
     private SpriteRenderer[] sprites;
     private float[] vertices;
@@ -48,12 +49,9 @@ public class RenderBatch implements Comparable<RenderBatch>{
     private int maxBatchSize;
     private int zIndex;
     private boolean spriteFull;
-    private Shader shader;
 
     //  CONSTRUCTORS
     public RenderBatch(int maxBatchSize, int zIndex) {
-        this.shader = AssetManager.getShader("assets/shaders/default.glsl");
-        this.shader.compile();
         this.sprites = new SpriteRenderer[maxBatchSize];
         this.maxBatchSize = maxBatchSize;
         this.zIndex = zIndex;
@@ -95,11 +93,19 @@ public class RenderBatch implements Comparable<RenderBatch>{
         int texId = 0;
         if (sprite.getTexture() != null) {
             for (int i = 0; i < textures.size(); i++) {
-                if (textures.get(i) == sprite.getTexture()) {
+                if (textures.get(i).equals(sprite.getTexture())) {
                     texId = i + 1;
                     break;
                 }
             }
+        }
+
+        boolean isRotated = sprite.parent.transform.rotation != 0.0f;
+        Matrix4f transfromMatrix = new Matrix4f().identity();
+        if (isRotated) {
+            transfromMatrix.translate(sprite.parent.transform.position.x, sprite.parent.transform.position.y, 0);
+            transfromMatrix.rotate((float)Math.toRadians(sprite.parent.transform.rotation), 0, 0, 1);
+            transfromMatrix.scale(sprite.parent.transform.scale.x, sprite.parent.transform.scale.y, 1);
         }
 
         // Add vertices with the appropiate properties (?) --REVISE
@@ -116,9 +122,15 @@ public class RenderBatch implements Comparable<RenderBatch>{
                 yAdd = 1.0f;
             }
 
+            Vector4f currentPos = new Vector4f(sprite.parent.transform.position.x + (xAdd * sprite.parent.transform.scale.x),
+                    sprite.parent.transform.position.y + (yAdd * sprite.parent.transform.scale.y), 0, 1);
+            if (isRotated) {
+                currentPos = new Vector4f(xAdd, yAdd, 0, 1).mul(transfromMatrix);
+            }
+
             // Load position
-            vertices[offset] = sprite.parent.transform.position.x + (xAdd * sprite.parent.transform.scale.x);
-            vertices[offset + 1] = sprite.parent.transform.position.y + (yAdd * sprite.parent.transform.scale.y);
+            vertices[offset] = currentPos.x;
+            vertices[offset + 1] = currentPos.y;
 
             //  Load Color
             vertices[offset + 2] = color.x;
@@ -132,6 +144,9 @@ public class RenderBatch implements Comparable<RenderBatch>{
 
             // Load Texture ID
             vertices[offset + 8] = texId;
+
+            // Load Entity ID
+            vertices[offset + 9] = sprite.parent.getUid() + 1;
 
             offset += VERTEX_SIZE;
         }
@@ -193,6 +208,9 @@ public class RenderBatch implements Comparable<RenderBatch>{
 
         glVertexAttribPointer(3, TEX_ID_SIZE, GL_FLOAT, false, VERTEX_SIZE_BYTES, TEX_ID_OFFSET);
         glEnableVertexAttribArray(3);
+
+        glVertexAttribPointer(4, ENTITY_ID_SIZE, GL_FLOAT, false, VERTEX_SIZE_BYTES, ENTITY_ID_OFFSET);
+        glEnableVertexAttribArray(4);
     }
 
     public void addSprite(SpriteRenderer spr) {
@@ -240,6 +258,7 @@ public class RenderBatch implements Comparable<RenderBatch>{
             glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
         }
 
+        Shader shader = Renderer.getBoundShader();
         shader.use();
         shader.uploadMat4f("uProjection", camera.getpMatrix());
         shader.uploadMat4f("uView", camera.getvMatrix());

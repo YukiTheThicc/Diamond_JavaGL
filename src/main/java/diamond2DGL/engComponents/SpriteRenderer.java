@@ -53,6 +53,10 @@ public class SpriteRenderer extends Component {
         }
     }
 
+    public void setTexture(Texture texture) {
+        this.sprite.setTexture(texture);
+    }
+
     public void setSprite(Sprite sprite) {
         this.sprite = sprite;
         this.hasChanged = true;

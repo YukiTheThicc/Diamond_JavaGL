@@ -1,5 +1,12 @@
 package diamond2DGL;
 
+import diamond2DGL.editor.PickingTexture;
+import diamond2DGL.listeners.KeyListener;
+import diamond2DGL.listeners.MouseListener;
+import diamond2DGL.renderer.FrameBuffer;
+import diamond2DGL.renderer.Renderer;
+import diamond2DGL.renderer.Shader;
+import diamond2DGL.utils.AssetManager;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
 
@@ -16,6 +23,11 @@ public class Display {
     private static Display display = null;
     private long glfwWindow;
     private ImGUILayer imGUILayer;
+    private FrameBuffer frameBuffer;
+    private PickingTexture pickingTexture;
+    // TODO - CHANGE SHADER SYSTEM
+    private Shader defaultShader;
+    private Shader pickingShader;
 
     // CONSTRUCTORS
     private Display() {
@@ -60,8 +72,16 @@ public class Display {
 
         glEnable(GL_BLEND);
         glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-        this.imGUILayer = new ImGUILayer(this.glfwWindow);
+
+        this.frameBuffer = new FrameBuffer(1920, 1080);
+        this.pickingTexture = new PickingTexture(1920, 1080);
+        this.imGUILayer = new ImGUILayer(this.glfwWindow, this.pickingTexture);
         this.imGUILayer.initImGui();
+
+        glViewport(0,0, 1920, 1080);
+
+        this.defaultShader = AssetManager.getShader("assets/shaders/default.glsl");
+        this.pickingShader = AssetManager.getShader("assets/shaders/pickingShader.glsl");
     }
 
     // GETTERS & SETTERS
@@ -71,14 +91,6 @@ public class Display {
 
     public static Display getDisplay() {
         return display;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public static void setDisplay(Display display) {
-        Display.display = display;
     }
 
     public long getGlfwWindow() {
@@ -91,6 +103,26 @@ public class Display {
 
     public static int getHeight() {
         return get().y;
+    }
+
+    public static FrameBuffer getFrameBuffer() {
+        return get().frameBuffer;
+    }
+
+    public static float getTargetAspectRatio() {
+        return 16.0f / 9.0f;
+    }
+
+    public static ImGUILayer getImGuiLayer() {
+        return get().imGUILayer;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public static void setDisplay(Display display) {
+        Display.display = display;
     }
 
     public static void setWidth(int newX) {
@@ -109,15 +141,35 @@ public class Display {
         return Display.display;
     }
 
-    public void clear() {
+    public void pollEvents() {
         glfwPollEvents();
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    }
+
+    public void texturePickingRender() {
+        // TODO - Change to only do texture picking if in editor
+        glDisable(GL_BLEND);
+        pickingTexture.enableWriting();
+        glViewport(0,0, 1920, 1080);
+        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        Renderer.bindShader(pickingShader);
+        Container.getEnv().render();
+        pickingTexture.disableWriting();
+        glEnable(GL_BLEND);
+    }
+
+    public void clear() {
+        this.frameBuffer.bind();
+        glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
+        Renderer.bindShader(defaultShader);
     }
 
     public void update(float dT) {
+        this.frameBuffer.unBind();
         this.imGUILayer.update(dT);
         glfwSwapBuffers(this.glfwWindow);
+        MouseListener.update();
     }
 
     public void close() {
