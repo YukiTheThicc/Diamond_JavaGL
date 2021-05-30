@@ -4,63 +4,21 @@
     "name": "Sprite_Entity",
     "components": [
       {
-        "type": "diamond2DGL.engComponents.SpriteRenderer",
+        "type": "diamond2DGL.engComponents.Transform",
         "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
+          "position": {
+            "x": 384.0,
+            "y": 224.0
           },
-          "sprite": {
-            "width": 16.0,
-            "height": 16.0,
-            "texture": {
-              "path": "assets/testing/decorationsAndBlocks.png",
-              "width": 112,
-              "height": 192
-            },
-            "texCoords": [
-              {
-                "x": 0.2857143,
-                "y": 0.9166667
-              },
-              {
-                "x": 0.2857143,
-                "y": 0.8333333
-              },
-              {
-                "x": 0.14285715,
-                "y": 0.8333333
-              },
-              {
-                "x": 0.14285715,
-                "y": 0.9166667
-              }
-            ]
+          "scale": {
+            "x": 0.0,
+            "y": 0.0
           },
-          "uid": 6
+          "rotation": 2.8,
+          "zIndex": 0,
+          "uid": 19
         }
-      }
-    ],
-    "zIndex": 0,
-    "transform": {
-      "position": {
-        "x": 755.5859,
-        "y": 416.423
       },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      },
-      "rotation": 0.0
-    },
-    "toSerialize": true
-  },
-  {
-    "uid": 2,
-    "name": "Sprite_Entity",
-    "components": [
       {
         "type": "diamond2DGL.engComponents.SpriteRenderer",
         "properties": {
@@ -80,52 +38,56 @@
             },
             "texCoords": [
               {
-                "x": 0.85714287,
-                "y": 0.9166667
-              },
-              {
-                "x": 0.85714287,
+                "x": 0.14285715,
                 "y": 0.8333333
               },
               {
-                "x": 0.71428573,
-                "y": 0.8333333
+                "x": 0.14285715,
+                "y": 0.75
               },
               {
-                "x": 0.71428573,
-                "y": 0.9166667
+                "x": 0.0,
+                "y": 0.75
+              },
+              {
+                "x": 0.0,
+                "y": 0.8333333
               }
             ]
           },
-          "uid": 7
+          "uid": 20
         }
       }
     ],
-    "zIndex": 0,
-    "transform": {
-      "position": {
-        "x": 477.89523,
-        "y": 411.78952
-      },
-      "scale": {
-        "x": 168.8421,
-        "y": 138.10529
-      },
-      "rotation": 0.0
-    },
     "toSerialize": true
   },
   {
-    "uid": 3,
+    "uid": 6,
     "name": "Sprite_Entity",
     "components": [
+      {
+        "type": "diamond2DGL.engComponents.Transform",
+        "properties": {
+          "position": {
+            "x": 256.0,
+            "y": 384.0
+          },
+          "scale": {
+            "x": 32.0,
+            "y": 32.0
+          },
+          "rotation": 0.0,
+          "zIndex": 0,
+          "uid": 39
+        }
+      },
       {
         "type": "diamond2DGL.engComponents.SpriteRenderer",
         "properties": {
           "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
+            "x": 0.9430052,
+            "y": 0.16612528,
+            "z": 0.16612528,
             "w": 1.0
           },
           "sprite": {
@@ -138,39 +100,27 @@
             },
             "texCoords": [
               {
+                "x": 0.42857143,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.42857143,
+                "y": 0.8333333
+              },
+              {
                 "x": 0.2857143,
                 "y": 0.8333333
               },
               {
                 "x": 0.2857143,
-                "y": 0.75
-              },
-              {
-                "x": 0.14285715,
-                "y": 0.75
-              },
-              {
-                "x": 0.14285715,
-                "y": 0.8333333
+                "y": 0.9166667
               }
             ]
           },
-          "uid": 14
+          "uid": 40
         }
       }
     ],
-    "zIndex": 0,
-    "transform": {
-      "position": {
-        "x": 448.0,
-        "y": 288.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      },
-      "rotation": 0.0
-    },
     "toSerialize": true
   }
 ]

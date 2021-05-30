@@ -2,15 +2,25 @@ package diamond2DGL;
 
 import diamond2DGL.engComponents.Sprite;
 import diamond2DGL.engComponents.SpriteRenderer;
+import diamond2DGL.engComponents.Transform;
 import org.joml.Vector2f;
 
 public class EntityFactory {
 
+    public static Entity createEntity(String name) {
+        Entity e = new Entity(name);
+        e.addComponent(new Transform());
+        e.transform = e.getComponent(Transform.class);
+        return e;
+    }
+
     public static Entity createSpriteEntity(Sprite sprite, int sizeX, int sizeY) {
-        Entity tile = new Entity("Sprite_Entity", new Transform(new Vector2f(), new Vector2f(sizeX, sizeY)), 0);
+        Entity entity = createEntity("Sprite_Entity");
+        entity.transform.scale.x = sizeX;
+        entity.transform.scale.y = sizeY;
         SpriteRenderer renderer = new SpriteRenderer();
         renderer.setSprite(sprite);
-        tile.addComponent(renderer);
-        return tile;
+        entity.addComponent(renderer);
+        return entity;
     }
 }

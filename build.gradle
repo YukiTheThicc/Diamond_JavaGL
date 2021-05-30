@@ -6,6 +6,9 @@ group 'org.example'
 version '0.0.1[PRE-ALPHA]'
 
 repositories {
+    flatDir {
+        dirs 'libs'
+    }
     jcenter()
     mavenCentral()
 }
@@ -41,6 +44,9 @@ switch (OperatingSystem.current()) {
 }
 
 dependencies {
+    // Box2D
+    implementation name: 'jbox2d-library'
+
     // JUNIT
     testImplementation('junit:junit:4.13')
 

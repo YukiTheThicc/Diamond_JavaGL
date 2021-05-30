@@ -1,6 +1,6 @@
 package diamond2DGL.engComponents;
 
-import diamond2DGL.Transform;
+import diamond2DGL.editor.DiaImGui;
 import diamond2DGL.renderer.Texture;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -70,6 +70,13 @@ public class SpriteRenderer extends Component {
     @Override
     public void start() {
         this.lastTransform = parent.transform.copy();
+    }
+
+    @Override
+    public void imgui() {
+        if (DiaImGui.colorPicker4("Color Picker", this.color)) {
+            this.hasChanged = true;
+        }
     }
 
     @Override

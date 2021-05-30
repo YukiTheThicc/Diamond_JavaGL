@@ -40,9 +40,10 @@ public class PropertiesWindow {
             }
             this.debounce = 0.2f;
         }
+        imgui();
     }
 
-    public void Imgui() {
+    public void imgui() {
         if (activeEntity != null) {
             ImGui.begin("Properties");
             activeEntity.imgui();

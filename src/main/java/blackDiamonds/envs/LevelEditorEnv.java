@@ -11,7 +11,7 @@ public class LevelEditorEnv extends Environment {
 
     private SpriteSheet sprites;
     private SpriteSheet gizmos;
-    Entity testingStuff = new Entity("testingStuff", new Transform(new Vector2f()), 0);
+    Entity testingStuff = EntityFactory.createEntity("testingStuff");
 
     public LevelEditorEnv(String name) {
         super(name);

@@ -1,6 +1,8 @@
 package diamond2DGL;
 
 import diamond2DGL.engComponents.Component;
+import diamond2DGL.engComponents.Transform;
+import imgui.ImGui;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,16 +15,13 @@ public class Entity {
     private int uid = -1;
     private String name;
     private List<Component> components;
-    private int zIndex;
-    public Transform transform;
+    public transient Transform transform;
     private boolean toSerialize = true;
 
     // CONSTRUCTORS
-    public Entity(String name, Transform transform, int zIndex) {
+    public Entity(String name) {
         this.name = name;
         this.components = new ArrayList<>();
-        this.zIndex = zIndex;
-        this.transform = transform;
 
         this.uid = ID_COUNTER++;
     }
@@ -34,10 +33,6 @@ public class Entity {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getzIndex() {
-        return zIndex;
     }
 
     public List<Component> getComponents() {
@@ -101,7 +96,9 @@ public class Entity {
 
     public void imgui() {
         for (Component c : components) {
-            c.imgui();
+            if (ImGui.collapsingHeader(c.getClass().getSimpleName())) {
+                c.imgui();
+            }
         }
     }
 

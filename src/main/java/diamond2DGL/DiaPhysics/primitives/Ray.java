@@ -1,4 +1,4 @@
-package diamond2DGL.physics.primitives;
+package diamond2DGL.DiaPhysics.primitives;
 
 import org.joml.Vector2f;
 

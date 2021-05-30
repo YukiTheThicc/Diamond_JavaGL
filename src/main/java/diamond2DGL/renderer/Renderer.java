@@ -41,7 +41,7 @@ public class Renderer {
     private void add(SpriteRenderer sprite) {
         boolean added = false;
         for (RenderBatch batch : batches) {
-            if (!batch.isSpriteFull() && batch.getzIndex() == sprite.parent.getzIndex()) {
+            if (!batch.isSpriteFull() && batch.getzIndex() == sprite.parent.transform.zIndex) {
                 Texture texture = sprite.getTexture();
                 if (texture == null || (!batch.isTextureFull() || batch.hasTexture(texture))) {
                     batch.addSprite(sprite);
@@ -51,7 +51,7 @@ public class Renderer {
             }
         }
         if (!added) {
-            RenderBatch batch = new RenderBatch(MAX_BATCH_SIZE, sprite.parent.getzIndex());
+            RenderBatch batch = new RenderBatch(MAX_BATCH_SIZE, sprite.parent.transform.zIndex);
             batch.start();
             batches.add(batch);
             batch.addSprite(sprite);
