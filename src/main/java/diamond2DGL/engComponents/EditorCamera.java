@@ -29,7 +29,7 @@ public class EditorCamera extends Component{
 
     // METHODS
     @Override
-    public void update(float dT) {
+    public void editorUpdate(float dT) {
         if (MouseListener.mouseButtonDown(GLFW_MOUSE_BUTTON_MIDDLE) && dragLag > 0) {
             this.clickOrigin = new Vector2f(MouseListener.getOrthoX(), MouseListener.getOrthoY());
             dragLag -= dT;

@@ -1,38 +1,42 @@
-package blackDiamonds.envs;
+package diamond2DGL.environments;
 
 import diamond2DGL.*;
 import diamond2DGL.engComponents.*;
+import diamond2DGL.observers.EventSystem;
+import diamond2DGL.observers.Observer;
+import diamond2DGL.observers.events.Event;
+import diamond2DGL.observers.handlers.EditorEventHandler;
 import diamond2DGL.utils.AssetManager;
 import imgui.ImGui;
 import imgui.ImVec2;
 import org.joml.Vector2f;
 
-public class LevelEditorEnv extends Environment {
+public class EditorEnvFactory extends EnvironmentFactory{
 
     private SpriteSheet sprites;
     private SpriteSheet gizmos;
-    Entity testingStuff = EntityFactory.createEntity("testingStuff");
+    private Entity editor;
 
-    public LevelEditorEnv(String name) {
-        super(name);
+    public EditorEnvFactory() {
+
     }
 
     @Override
-    public void init() {
-        loadResources();
+    public void build(Environment env) {
         sprites = AssetManager.getSpriteSheet("assets/testing/decorationsAndBlocks.png");
         gizmos = AssetManager.getSpriteSheet("assets/testing/gizmos.png");
 
-        this.camera = new Camera(new Vector2f(0, 0));
-        testingStuff.addComponent(new MouseControls());
-        testingStuff.addComponent(new GridLines());
-        testingStuff.addComponent(new EditorCamera(this.camera));
-        testingStuff.addComponent(new GizmoSystem(gizmos));
-
-        testingStuff.start();
+        editor = EntityFactory.createEntity("Editor");
+        editor.setNotToSerialize();
+        editor.addComponent(new MouseControls());
+        editor.addComponent(new GridLines());
+        editor.addComponent(new EditorCamera(env.getCamera()));
+        editor.addComponent(new GizmoSystem(gizmos));
+        env.addEntity(editor);
     }
 
-    public void loadResources() {
+    @Override
+    public void loadResources(Environment env) {
         AssetManager.getShader("assets/shaders/default.glsl");
         AssetManager.addSpriteSheet("assets/testing/decorationsAndBlocks.png",
                 new SpriteSheet(AssetManager.getTexture("assets/testing/decorationsAndBlocks.png"),
@@ -40,7 +44,7 @@ public class LevelEditorEnv extends Environment {
         AssetManager.addSpriteSheet("assets/testing/gizmos.png",
                 new SpriteSheet(AssetManager.getTexture("assets/testing/gizmos.png"),
                         24, 48, 3, 0));
-        for (Entity e : entities) {
+        for (Entity e : env.getEntities()) {
             if (e.getComponent(SpriteRenderer.class) != null) {
                 SpriteRenderer spr = e.getComponent(SpriteRenderer.class);
                 if (spr.getTexture() != null) {
@@ -51,23 +55,9 @@ public class LevelEditorEnv extends Environment {
     }
 
     @Override
-    public void update(float dT) {
-        testingStuff.update(dT);
-        this.camera.changeProjection();
-        for (Entity e : this.entities) {
-            e.update(dT);
-        }
-    }
-
-    @Override
-    public void render() {
-        this.renderer.render();
-    }
-
-    @Override
     public void imgui() {
         ImGui.begin("Level Editor Stuff");
-        testingStuff.imgui();
+        editor.imgui();
         ImGui.end();
 
         ImGui.begin("Tiles");
@@ -90,19 +80,18 @@ public class LevelEditorEnv extends Environment {
             ImGui.pushID(i);
             if (ImGui.imageButton(id, sprWidth, sprHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y)) {
                 Entity tile = EntityFactory.createSpriteEntity(sprite, 32, 32);
-                testingStuff.getComponent(MouseControls.class).pickupEntity(tile);
+                editor.getComponent(MouseControls.class).pickupEntity(tile);
             }
             ImGui.popID();
 
             ImVec2 lastButtonPos = new ImVec2();
             ImGui.getItemRectMax(lastButtonPos);
             float lastButtonX2 = lastButtonPos.x;
-            float nextButtonX2 = lastButtonX2 + itemSpacing.x +sprWidth;
+            float nextButtonX2 = lastButtonX2 + itemSpacing.x + sprWidth;
             if (i + 1 < sprites.size() && nextButtonX2 < windowX2) {
                 ImGui.sameLine();
             }
         }
-
         ImGui.end();
     }
 }

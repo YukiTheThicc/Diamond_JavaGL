@@ -61,7 +61,7 @@ public class DebugDraw {
     //  ADD LINES
     // =================================================================================================================
     public static void addLine(Vector2f from, Vector2f to) {
-        addLine(from, to, new Vector3f(0, 1, 0), 1);
+        addLine(from, to, new Vector3f(0, 1, 0), 2);
     }
 
     public static void addLine(Vector2f from, Vector2f to, Vector3f color) {
@@ -99,11 +99,11 @@ public class DebugDraw {
     }
 
     public static void addBox(Vector2f center, Vector2f dimensions, float rotation, Vector3f color) {
-        addBox(center, dimensions, rotation, color,1);
+        addBox(center, dimensions, rotation, color,2);
     }
 
     public static void addBox(Vector2f center, Vector2f dimensions, float rotation) {
-        addBox(center, dimensions, rotation, new Vector3f(0,0,0),1);
+        addBox(center, dimensions, rotation, new Vector3f(0,0,0),2);
     }
 
     // =================================================================================================================

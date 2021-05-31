@@ -42,7 +42,7 @@ public class SpriteRenderer extends Component {
         return this.sprite.getTexCoords();
     }
 
-    public boolean hasChanged() {
+    public boolean isChanged() {
         return this.hasChanged;
     }
 
@@ -62,6 +62,10 @@ public class SpriteRenderer extends Component {
         this.hasChanged = true;
     }
 
+    public void hasChanged() {
+        this.hasChanged = true;
+    }
+
     public void wasChanged() {
         this.hasChanged = false;
     }
@@ -75,6 +79,14 @@ public class SpriteRenderer extends Component {
     @Override
     public void imgui() {
         if (DiaImGui.colorPicker4("Color Picker", this.color)) {
+            this.hasChanged = true;
+        }
+    }
+
+    @Override
+    public void editorUpdate(float dT) {
+        if (!this.lastTransform.equals(this.parent.transform)) {
+            this.parent.transform.copy(this.lastTransform);
             this.hasChanged = true;
         }
     }

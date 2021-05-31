@@ -1,5 +1,6 @@
 package diamond2DGL;
 
+import diamond2DGL.editor.MenuBar;
 import diamond2DGL.editor.PickingTexture;
 import diamond2DGL.editor.PropertiesWindow;
 import diamond2DGL.editor.ViewPortWindow;
@@ -25,12 +26,14 @@ public class ImGUILayer {
     private String glslVersion = null; // We can initialize our renderer with different versions of the GLSL
     private ViewPortWindow viewPortWindow;
     private PropertiesWindow propertiesWindow;
+    private MenuBar menuBar;
 
     // CONSTRUCTORS
     public ImGUILayer (long windowPtr, PickingTexture pickingTexture) {
         this.glfwWindow = windowPtr;
         this.viewPortWindow = new ViewPortWindow();
         this.propertiesWindow = new PropertiesWindow(pickingTexture);
+        this.menuBar = new MenuBar();
     }
 
     //GETTERS & SETTERS
@@ -219,6 +222,8 @@ public class ImGUILayer {
         ImGui.showDemoWindow();
         viewPortWindow.imgui();
         propertiesWindow.update(dT);
+        propertiesWindow.imgui();
+        menuBar.imgui();
         ImGui.end();
         ImGui.render();
 

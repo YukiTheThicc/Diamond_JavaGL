@@ -59,6 +59,15 @@ public class Renderer {
         }
     }
 
+    public void destroyEntity(Entity e) {
+        if (e.getComponent(SpriteRenderer.class) == null) return;
+        for (RenderBatch batch : batches) {
+            if (batch.destroyEntity(e)) {
+                return;
+            }
+        }
+    }
+
     public void render() {
         currentShader.use();
         for (RenderBatch batch : batches) {

@@ -1,6 +1,7 @@
 package diamond2DGL.renderer;
 
 import diamond2DGL.Camera;
+import diamond2DGL.Entity;
 import diamond2DGL.engComponents.SpriteRenderer;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
@@ -247,7 +248,7 @@ public class RenderBatch implements Comparable<RenderBatch>{
         boolean rebuffer = false;
         for (int i = 0; i < this.numSprites; i++) {
             SpriteRenderer spr = sprites[i];
-            if (spr.hasChanged()) {
+            if (spr.isChanged()) {
                 loadVertexProperties(i);
                 spr.wasChanged();
                 rebuffer = true;
@@ -281,6 +282,21 @@ public class RenderBatch implements Comparable<RenderBatch>{
             textures.get(i).unbind();
         }
         shader.detach();
+    }
+
+    public boolean destroyEntity(Entity e) {
+        SpriteRenderer sprite = e.getComponent(SpriteRenderer.class);
+        for (int i = 0; i < numSprites; i++) {
+            if (sprites[i] == sprite) {
+                for (int j = i; j < numSprites - 1; j++) {
+                    sprites[j] = sprites[j + 1];
+                    sprites[j].hasChanged();
+                }
+                numSprites--;
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

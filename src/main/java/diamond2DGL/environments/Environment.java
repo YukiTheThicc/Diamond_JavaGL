@@ -1,12 +1,17 @@
-package diamond2DGL;
+package diamond2DGL.environments;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import diamond2DGL.Camera;
+import diamond2DGL.Entity;
 import diamond2DGL.GSONDeserializers.ComponentDeserializer;
 import diamond2DGL.GSONDeserializers.EntityDeserializer;
 import diamond2DGL.engComponents.Component;
+import diamond2DGL.observers.Observer;
+import diamond2DGL.observers.events.Event;
+import diamond2DGL.physics.Physics;
 import diamond2DGL.renderer.Renderer;
-import imgui.ImGui;
+import org.joml.Vector2f;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -16,22 +21,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class Environment {
+public class Environment {
 
     // ATTRIBUTES
-    private String name;
-    private boolean isRunning = false;
-    protected boolean loadedEnvironment = false;
-    protected Renderer renderer;
-    protected Camera camera;
-    protected List<Entity> entities;
-
+    private boolean isRunning;
+    private Renderer renderer;
+    private Camera camera;
+    private List<Entity> entities;
+    private EnvironmentFactory factory;
+    private Physics physics;
 
     // CONSTRUCTORS
-    public Environment(String name) {
-        this.name = name;
-        this.entities = new ArrayList<>();
+    public Environment(EnvironmentFactory factory) {
+        this.factory = factory;
+        this.physics = new Physics();
         this.renderer = new Renderer();
+        this.entities = new ArrayList<>();
+        this.isRunning = false;
     }
 
     // GETTERS & SETTERS
@@ -43,6 +49,10 @@ public abstract class Environment {
         return this.camera;
     }
 
+    public List<Entity> getEntities() {
+        return entities;
+    }
+
     public Entity getEntity(int id) {
         Optional<Entity> result = this.entities.stream()
                 .filter(entity -> entity.getUid() == id)
@@ -51,12 +61,18 @@ public abstract class Environment {
     }
 
     // METHODS
-    public abstract void init();
+    public void init() {
+        this.camera = new Camera(new Vector2f(0, 0));
+        this.factory.loadResources(this);
+        this.factory.build(this);
+    }
 
     public void start() {
-        for (Entity e : this.entities) {
+        for (int i = 0; i < entities.size(); i++) {
+            Entity e = entities.get(i);
             e.start();
             this.renderer.add(e);
+            this.physics.add(e);
         }
         isRunning = true;
     }
@@ -68,18 +84,48 @@ public abstract class Environment {
             entities.add(e);
             e.start();
             this.renderer.add(e);
+            this.physics.add(e);
         }
     }
 
-    public abstract void update(float dT);
-
-    public abstract void render();
-
-    public void imgui() {
-
+    public void editorUpdate(float dT) {
+        this.camera.changeProjection();
+        for (int i = 0; i < entities.size(); i++) {
+            Entity e = entities.get(i);
+            e.editorUpdate(dT);
+            if (e.isDead()) {
+                entities.remove(i);
+                this.renderer.destroyEntity(e);
+                this.physics.destroyEntity(e);
+                i--;
+            }
+        }
     }
 
-    public void saveExit() {
+    public void update(float dT) {
+        this.camera.changeProjection();
+        this.physics.update(dT);
+        for (int i = 0; i < entities.size(); i++) {
+            Entity e = entities.get(i);
+            e.update(dT);
+            if (e.isDead()) {
+                entities.remove(i);
+                this.renderer.destroyEntity(e);
+                this.physics.destroyEntity(e);
+                i--;
+            }
+        }
+    }
+
+    public void render() {
+        this.renderer.render();
+    }
+
+    public void imgui() {
+        this.factory.imgui();
+    }
+
+    public void save() {
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .registerTypeAdapter(Component.class, new ComponentDeserializer())
@@ -135,7 +181,12 @@ public abstract class Environment {
             maxCompId++;
             Entity.init(maxEntityId);
             Component.init(maxCompId);
-            this.loadedEnvironment = true;
+        }
+    }
+
+    public void destroy() {
+        for (Entity e : entities) {
+            e.destroy();
         }
     }
 }

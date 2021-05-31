@@ -12,12 +12,19 @@ import java.lang.reflect.Modifier;
 
 public abstract class Component {
 
+    // ATTRIBUTES
     private static int ID_COUNTER = 0;
-
     public transient Entity parent = null;
     private int uid = -1;
 
+    // METHODS
+    public void destroy() {}
+
     public void start() {
+
+    }
+
+    public void editorUpdate(float dT) {
 
     }
 

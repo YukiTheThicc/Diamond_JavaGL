@@ -10,7 +10,7 @@ import org.joml.Vector3f;
 public class GridLines extends Component {
 
     @Override
-    public void update(float dt) {
+    public void editorUpdate(float dt) {
         Camera camera = Container.getCamera();
         Vector2f cameraPos = camera.pos;
         Vector2f projectionSize = camera.getProjectionSize();

@@ -15,7 +15,7 @@ public class RigidBody extends Component {
     private BodyType bodyType = BodyType.Dynamic;
     private boolean fixedRotation = false;
     private boolean continuousCollision = true;
-    private Body rawBody = null;
+    private transient Body rawBody = null;
 
     // CONSTRUCTORS
 

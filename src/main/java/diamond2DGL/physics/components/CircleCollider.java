@@ -1,6 +1,20 @@
 package diamond2DGL.physics.components;
 
-import diamond2DGL.engComponents.Component;
+public class CircleCollider extends Collider {
 
-public class CircleCollider extends Component {
+    // ATTRIBUTES
+    private float radius = 1f;
+
+    // CONSTRUCTORS
+
+    //GETTERS & SETTERS
+    public float getRadius() {
+        return radius;
+    }
+
+    public void setRadius(float radius) {
+        this.radius = radius;
+    }
+
+    // METHODS
 }

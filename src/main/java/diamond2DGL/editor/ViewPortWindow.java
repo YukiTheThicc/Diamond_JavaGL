@@ -2,17 +2,35 @@ package diamond2DGL.editor;
 
 import diamond2DGL.Display;
 import diamond2DGL.listeners.MouseListener;
+import diamond2DGL.observers.EventSystem;
+import diamond2DGL.observers.events.Event;
+import diamond2DGL.observers.events.EventType;
 import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.flag.ImGuiWindowFlags;
 import org.joml.Vector2f;
 
+
 public class ViewPortWindow {
 
     private float leftX, rightX, topY, bottomY;
+    private boolean isPlaying = false;
 
     public void imgui(){
-        ImGui.begin("Game ViewPort", ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse);
+        ImGui.begin("Game ViewPort", ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse
+        | ImGuiWindowFlags.MenuBar);
+
+        ImGui.beginMenuBar();
+        if (ImGui.menuItem("Play", "", isPlaying, !isPlaying)) {
+            isPlaying = true;
+            EventSystem.notify(null, new Event(EventType.Play));
+        }
+        if (ImGui.menuItem("Stop", "", !isPlaying, isPlaying)) {
+            isPlaying = false;
+            EventSystem.notify(null, new Event(EventType.Stop));
+        }
+        ImGui.endMenuBar();
+
         ImVec2 portSize = getMaxPortSize();
         ImVec2 portPos = getCenteredPos(portSize);
         ImGui.setCursorPos(portPos.x, portPos.y);

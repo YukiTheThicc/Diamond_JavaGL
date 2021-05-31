@@ -1,7 +1,8 @@
 package blackDiamonds;
 
-import blackDiamonds.envs.LevelEditorEnv;
 import diamond2DGL.Game;
+import diamond2DGL.environments.Environment;
+import diamond2DGL.environments.EnvironmentFactory;
 
 public class Game_BD extends Game {
 
@@ -10,16 +11,11 @@ public class Game_BD extends Game {
     }
 
     @Override
-    public void selectEnvironment(int envCode) {
-        switch (envCode) {
-            case 0:
-                this.setCurrentEnvironment(new LevelEditorEnv("Main Menu"));
-                break;
-            case 1:
-                break;
-            default:
-                assert false : "Weird Environment Token '" + envCode + "'";
+    public void selectEnvironment(EnvironmentFactory factory) {
+        if (currentEnvironment != null) {
+            currentEnvironment.destroy();
         }
+        currentEnvironment = new Environment(factory);
         this.getCurrentEnvironment().load();
         this.getCurrentEnvironment().init();
         this.getCurrentEnvironment().start();

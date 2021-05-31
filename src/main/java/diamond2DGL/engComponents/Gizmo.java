@@ -68,6 +68,13 @@ public class Gizmo extends Component{
 
     @Override
     public void update(float dT) {
+        if (using) {
+            setInactive();
+        }
+    }
+
+    @Override
+    public void editorUpdate(float dT) {
         if (!using) return;
 
         this.activeEntity = this.propertiesWindow.getActiveEntity();

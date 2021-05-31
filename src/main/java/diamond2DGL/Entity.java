@@ -17,6 +17,7 @@ public class Entity {
     private List<Component> components;
     public transient Transform transform;
     private boolean toSerialize = true;
+    private boolean isDead = false;
 
     // CONSTRUCTORS
     public Entity(String name) {
@@ -27,6 +28,10 @@ public class Entity {
     }
 
     // GETTERS & SETTERS
+    public int getUid() {
+        return this.uid;
+    }
+
     public String getName() {
         return name;
     }
@@ -37,6 +42,10 @@ public class Entity {
 
     public List<Component> getComponents() {
         return components;
+    }
+
+    public boolean isDead() {
+        return isDead;
     }
 
     public boolean isToSerialize() {
@@ -52,6 +61,35 @@ public class Entity {
     }
 
     // METHODS
+    public void destroy() {
+        this.isDead = true;
+        for (int i=0; i < components.size(); i++) {
+            components.get(i).destroy();
+        }
+    }
+
+    public static void init(int maxId) {
+        ID_COUNTER = maxId;
+    }
+
+    public void start() {
+        for (int i = 0; i < components.size(); i++) {
+            components.get(i).start();
+        }
+    }
+
+    public void editorUpdate(float dT) {
+        for (int i = 0; i < components.size(); i++) {
+            components.get(i).editorUpdate(dT);
+        }
+    }
+
+    public void update(float dT) {
+        for (int i = 0; i < components.size(); i++) {
+            components.get(i).update(dT);
+        }
+    }
+
     public <T extends Component> T getComponent(Class<T> componentClass) {
         for (Component c : components) {
             try {
@@ -82,18 +120,6 @@ public class Entity {
         c.parent = this;
     }
 
-    public void update(float dT) {
-        for (int i = 0; i < components.size(); i++) {
-            components.get(i).update(dT);
-        }
-    }
-
-    public void start() {
-        for (int i = 0; i < components.size(); i++) {
-            components.get(i).start();
-        }
-    }
-
     public void imgui() {
         for (Component c : components) {
             if (ImGui.collapsingHeader(c.getClass().getSimpleName())) {
@@ -102,11 +128,5 @@ public class Entity {
         }
     }
 
-    public static void init(int maxId) {
-        ID_COUNTER = maxId;
-    }
 
-    public int getUid() {
-        return this.uid;
-    }
 }

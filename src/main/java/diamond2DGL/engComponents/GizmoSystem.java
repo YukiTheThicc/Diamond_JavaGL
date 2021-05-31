@@ -12,10 +12,14 @@ public class GizmoSystem extends Component{
     private SpriteSheet gizmos;
     private int usingGizmo = 0;
 
+    // CONSTRUCTORS
     public GizmoSystem (SpriteSheet gizmoSprites) {
         this.gizmos = gizmoSprites;
     }
 
+    // GETTERS & SETTERS
+
+    // METHODS
     @Override
     public void start() {
         parent.addComponent(new TranslateGizmo(gizmos.getSprite(1), Display.getImGuiLayer().getPropertiesWindow()));
@@ -23,7 +27,7 @@ public class GizmoSystem extends Component{
     }
 
     @Override
-    public void update(float dT) {
+    public void editorUpdate(float dT) {
         switch (usingGizmo) {
             case 0:
                 parent.getComponent(TranslateGizmo.class).setUsing();

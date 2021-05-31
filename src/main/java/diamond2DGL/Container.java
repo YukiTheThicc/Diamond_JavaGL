@@ -1,14 +1,17 @@
 package diamond2DGL;
 
+import diamond2DGL.environments.Environment;
+import diamond2DGL.observers.EventSystem;
+import diamond2DGL.observers.Observer;
+import diamond2DGL.observers.events.Event;
+import diamond2DGL.observers.handlers.EditorEventHandler;
 import diamond2DGL.renderer.DebugDraw;
-import diamond2DGL.renderer.Renderer;
-import diamond2DGL.utils.AssetManager;
 
 import static org.lwjgl.glfw.GLFW.*;
 
 /*
-* SINGLETON - Game container class
-*/
+ * SINGLETON - Game container class
+ */
 public class Container implements Runnable {
 
     // ATTRIBUTES
@@ -16,12 +19,14 @@ public class Container implements Runnable {
     private final Game game;
     private final Display display;
     private boolean running;
+    private boolean editorPlaying = false;
 
     // CONSTRUCTOR
     public Container(Game game) {
         this.running = false;
         this.game = game;
         this.display = Display.get();
+        EventSystem.addObserver(new EditorEventHandler());
     }
 
     // GETTERS AND SETTERS
@@ -29,8 +34,8 @@ public class Container implements Runnable {
         return display;
     }
 
-    public Game getGame() {
-        return game;
+    public static Game getGame() {
+        return get().game;
     }
 
     public boolean isRunning() {
@@ -38,24 +43,36 @@ public class Container implements Runnable {
     }
 
     public static Environment getEnv() {
-        return Container.get().getGame().getCurrentEnvironment();
+        return get().game.getCurrentEnvironment();
     }
 
     public static Camera getCamera() {
-        return Container.get().getGame().getCurrentEnvironment().getCamera();
+        return get().game.getCurrentEnvironment().getCamera();
+    }
+
+    public static void playEditor() {
+        get().editorPlaying = true;
+    }
+
+    public static void stopEditor() {
+        get().editorPlaying = false;
     }
 
     // METHODS
+    private void dispose() {
+        this.getDisplay().close();
+    }
+
+    private boolean shouldClose() {
+        return glfwWindowShouldClose(this.display.getGlfwWindow());
+    }
+
     public static void init(Game game) {
         container = new Container(game);
     }
 
     public static Container get() {
         return container;
-    }
-
-    private boolean shouldClose() {
-        return glfwWindowShouldClose(this.display.getGlfwWindow());
     }
 
     public void stop() {
@@ -73,12 +90,17 @@ public class Container implements Runnable {
 
             this.display.texturePickingRender();
 
-            DebugDraw.beginFrame();
+
             this.display.clear();
 
             if (dt >= 0) {
-                DebugDraw.draw();
-                this.game.update(dt);
+                if (!editorPlaying) {
+                    DebugDraw.beginFrame();
+                    DebugDraw.draw();
+                    this.game.editorUpdate(dt);
+                } else {
+                    this.game.update(dt);
+                }
                 this.game.render();
                 this.display.update(dt);
             }
@@ -88,11 +110,8 @@ public class Container implements Runnable {
             bt = et;
             this.running = !this.shouldClose();
         }
-        this.getGame().getCurrentEnvironment().saveExit();
         this.dispose();
     }
-
-    private void dispose() {
-        this.getDisplay().close();
-    }
 }
+
+
