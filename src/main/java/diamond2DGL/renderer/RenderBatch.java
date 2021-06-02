@@ -44,6 +44,7 @@ public class RenderBatch implements Comparable<RenderBatch>{
     private SpriteRenderer[] sprites;
     private float[] vertices;
     private int[] texSlots = {0, 1, 2, 3, 4, 5, 6, 7};
+    private Renderer renderer;
 
     private int numSprites;
     private int vaoID, vboID;
@@ -52,10 +53,11 @@ public class RenderBatch implements Comparable<RenderBatch>{
     private boolean spriteFull;
 
     //  CONSTRUCTORS
-    public RenderBatch(int maxBatchSize, int zIndex) {
+    public RenderBatch(int maxBatchSize, int zIndex, Renderer renderer) {
         this.sprites = new SpriteRenderer[maxBatchSize];
         this.maxBatchSize = maxBatchSize;
         this.zIndex = zIndex;
+        this.renderer = renderer;
 
         // 4 vertices per quad
         this.vertices = new float[maxBatchSize * 4 * this.VERTEX_SIZE];
@@ -110,17 +112,17 @@ public class RenderBatch implements Comparable<RenderBatch>{
         }
 
         // Add vertices with the appropiate properties (?) --REVISE
-        float xAdd = 1.0f;
-        float yAdd = 1.0f;
+        float xAdd = 0.5f;
+        float yAdd = 0.5f;
         for (int i = 0; i < 4; i++) {
 
             // Set the values of each vertex coords as its supposed to be
             if (i == 1) {
-                yAdd = 0.0f;
+                yAdd = -0.5f;
             } else if (i == 2) {
-                xAdd = 0.0f;
+                xAdd = -0.5f;
             } else if (i == 3) {
-                yAdd = 1.0f;
+                yAdd = 0.5f;
             }
 
             Vector4f currentPos = new Vector4f(sprite.parent.transform.position.x + (xAdd * sprite.parent.transform.scale.x),
@@ -252,6 +254,12 @@ public class RenderBatch implements Comparable<RenderBatch>{
                 loadVertexProperties(i);
                 spr.wasChanged();
                 rebuffer = true;
+            }
+            // TODO - Find a better solution for runtime zIndex update
+            if (spr.parent.transform.zIndex != this.zIndex) {
+                destroyEntity(spr.parent);
+                renderer.add(spr.parent);
+                i--;
             }
         }
         if (rebuffer) {

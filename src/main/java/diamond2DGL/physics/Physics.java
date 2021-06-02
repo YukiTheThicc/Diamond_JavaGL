@@ -23,6 +23,14 @@ public class Physics {
     private int velocityIterations = 8;
     private int positionIterations = 3;
 
+    // GETTERS & SETTERS
+    public Vec2 getGravity() {
+        return gravity;
+    }
+
+    public World getWorld() {
+        return world;
+    }
 
     // METHODS
     public void add(Entity entity) {
@@ -84,5 +92,10 @@ public class Physics {
             physicsTime -= physicsTimeStep;
             world.step(physicsTime, velocityIterations, positionIterations);
         }
+        System.out.println("-- dt: " + dt + " -- physicsTime: " + physicsTime + " -- physicsTimeStep: " + physicsTimeStep + " --");
+    }
+
+    public void reset() {
+        physicsTime = 0;
     }
 }

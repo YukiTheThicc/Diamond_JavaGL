@@ -1,22 +1,22 @@
 [
   {
-    "uid": 0,
     "name": "Sprite_Entity",
+    "uid": 78,
     "components": [
       {
         "type": "diamond2DGL.engComponents.Transform",
         "properties": {
           "position": {
-            "x": 384.0,
-            "y": 224.0
+            "x": 1.5,
+            "y": 0.5
           },
           "scale": {
-            "x": 0.0,
-            "y": 0.0
+            "x": 0.25,
+            "y": 0.25
           },
-          "rotation": 2.8,
+          "rotation": 0.0,
           "zIndex": 0,
-          "uid": 19
+          "uid": 40
         }
       },
       {
@@ -55,7 +55,41 @@
               }
             ]
           },
-          "uid": 20
+          "uid": 41
+        }
+      },
+      {
+        "type": "diamond2DGL.physics.components.BoxCollider",
+        "properties": {
+          "halfSize": {
+            "x": 0.2,
+            "y": 0.2
+          },
+          "origin": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "uid": 54
+        }
+      },
+      {
+        "type": "diamond2DGL.physics.components.RigidBody",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "mass": 0.0,
+          "bodyType": "Static",
+          "fixedRotation": false,
+          "continuousCollision": true,
+          "uid": 58
         }
       }
     ],
@@ -63,32 +97,32 @@
     "isDead": false
   },
   {
-    "uid": 1,
     "name": "Sprite_Entity",
+    "uid": 79,
     "components": [
       {
         "type": "diamond2DGL.engComponents.Transform",
         "properties": {
           "position": {
-            "x": 0.0,
-            "y": 0.0
+            "x": 1.75,
+            "y": 0.5
           },
           "scale": {
-            "x": 32.0,
-            "y": 32.0
+            "x": 0.25,
+            "y": 0.25
           },
           "rotation": 0.0,
           "zIndex": 0,
-          "uid": 39
+          "uid": 42
         }
       },
       {
         "type": "diamond2DGL.engComponents.SpriteRenderer",
         "properties": {
           "color": {
-            "x": 0.9430052,
-            "y": 0.16612528,
-            "z": 0.16612528,
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
             "w": 1.0
           },
           "sprite": {
@@ -101,24 +135,58 @@
             },
             "texCoords": [
               {
-                "x": 0.42857143,
-                "y": 0.9166667
-              },
-              {
-                "x": 0.42857143,
+                "x": 0.14285715,
                 "y": 0.8333333
               },
               {
-                "x": 0.2857143,
-                "y": 0.8333333
+                "x": 0.14285715,
+                "y": 0.75
               },
               {
-                "x": 0.2857143,
-                "y": 0.9166667
+                "x": 0.0,
+                "y": 0.75
+              },
+              {
+                "x": 0.0,
+                "y": 0.8333333
               }
             ]
           },
-          "uid": 40
+          "uid": 43
+        }
+      },
+      {
+        "type": "diamond2DGL.physics.components.RigidBody",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "mass": 0.0,
+          "bodyType": "Static",
+          "fixedRotation": false,
+          "continuousCollision": true,
+          "uid": 55
+        }
+      },
+      {
+        "type": "diamond2DGL.physics.components.BoxCollider",
+        "properties": {
+          "halfSize": {
+            "x": 0.2,
+            "y": 0.2
+          },
+          "origin": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "uid": 63
         }
       }
     ],
@@ -126,61 +194,95 @@
     "isDead": false
   },
   {
-    "uid": 2,
     "name": "Sprite_Entity",
+    "uid": 80,
     "components": [
       {
         "type": "diamond2DGL.engComponents.Transform",
         "properties": {
           "position": {
-            "x": -31.285744,
-            "y": 65.11317
+            "x": 2.0,
+            "y": 0.5
           },
           "scale": {
-            "x": 32.0,
-            "y": 32.0
+            "x": 0.25,
+            "y": 0.25
           },
           "rotation": 0.0,
           "zIndex": 0,
+          "uid": 44
+        }
+      },
+      {
+        "type": "diamond2DGL.engComponents.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "path": "assets/testing/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "texCoords": [
+              {
+                "x": 0.14285715,
+                "y": 0.8333333
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.75
+              },
+              {
+                "x": 0.0,
+                "y": 0.75
+              },
+              {
+                "x": 0.0,
+                "y": 0.8333333
+              }
+            ]
+          },
+          "uid": 45
+        }
+      },
+      {
+        "type": "diamond2DGL.physics.components.BoxCollider",
+        "properties": {
+          "halfSize": {
+            "x": 0.2,
+            "y": 0.2
+          },
+          "origin": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
           "uid": 59
         }
       },
       {
-        "type": "diamond2DGL.engComponents.SpriteRenderer",
+        "type": "diamond2DGL.physics.components.RigidBody",
         "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
           },
-          "sprite": {
-            "width": 16.0,
-            "height": 16.0,
-            "texture": {
-              "path": "assets/testing/decorationsAndBlocks.png",
-              "width": 112,
-              "height": 192
-            },
-            "texCoords": [
-              {
-                "x": 0.2857143,
-                "y": 0.8333333
-              },
-              {
-                "x": 0.2857143,
-                "y": 0.75
-              },
-              {
-                "x": 0.14285715,
-                "y": 0.75
-              },
-              {
-                "x": 0.14285715,
-                "y": 0.8333333
-              }
-            ]
-          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "mass": 0.0,
+          "bodyType": "Static",
+          "fixedRotation": false,
+          "continuousCollision": true,
           "uid": 60
         }
       }
@@ -189,23 +291,23 @@
     "isDead": false
   },
   {
-    "uid": 3,
     "name": "Sprite_Entity",
+    "uid": 81,
     "components": [
       {
         "type": "diamond2DGL.engComponents.Transform",
         "properties": {
           "position": {
-            "x": 192.0,
-            "y": 288.0
+            "x": 2.25,
+            "y": 0.5
           },
           "scale": {
-            "x": 32.0,
-            "y": 32.0
+            "x": 0.25,
+            "y": 0.25
           },
           "rotation": 0.0,
           "zIndex": 0,
-          "uid": 80
+          "uid": 46
         }
       },
       {
@@ -228,23 +330,57 @@
             "texCoords": [
               {
                 "x": 0.14285715,
-                "y": 0.5
+                "y": 0.8333333
               },
               {
                 "x": 0.14285715,
-                "y": 0.41666666
+                "y": 0.75
               },
               {
                 "x": 0.0,
-                "y": 0.41666666
+                "y": 0.75
               },
               {
                 "x": 0.0,
-                "y": 0.5
+                "y": 0.8333333
               }
             ]
           },
-          "uid": 81
+          "uid": 47
+        }
+      },
+      {
+        "type": "diamond2DGL.physics.components.RigidBody",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "mass": 0.0,
+          "bodyType": "Static",
+          "fixedRotation": false,
+          "continuousCollision": true,
+          "uid": 61
+        }
+      },
+      {
+        "type": "diamond2DGL.physics.components.BoxCollider",
+        "properties": {
+          "halfSize": {
+            "x": 0.2,
+            "y": 0.2
+          },
+          "origin": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "uid": 62
         }
       }
     ],
@@ -252,23 +388,23 @@
     "isDead": false
   },
   {
-    "uid": 4,
     "name": "Sprite_Entity",
+    "uid": 82,
     "components": [
       {
         "type": "diamond2DGL.engComponents.Transform",
         "properties": {
           "position": {
-            "x": 32.0,
-            "y": 160.0
+            "x": 1.75,
+            "y": 1.0
           },
           "scale": {
-            "x": 32.0,
-            "y": 32.0
+            "x": 0.25,
+            "y": 0.25
           },
           "rotation": 0.0,
           "zIndex": 0,
-          "uid": 101
+          "uid": 48
         }
       },
       {
@@ -290,24 +426,42 @@
             },
             "texCoords": [
               {
-                "x": 0.14285715,
+                "x": 0.5714286,
                 "y": 0.8333333
               },
               {
-                "x": 0.14285715,
+                "x": 0.5714286,
                 "y": 0.75
               },
               {
-                "x": 0.0,
+                "x": 0.42857143,
                 "y": 0.75
               },
               {
-                "x": 0.0,
+                "x": 0.42857143,
                 "y": 0.8333333
               }
             ]
           },
-          "uid": 102
+          "uid": 49
+        }
+      },
+      {
+        "type": "diamond2DGL.physics.components.BoxCollider",
+        "properties": {
+          "halfSize": {
+            "x": 0.2,
+            "y": 0.2
+          },
+          "origin": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "uid": 53
         }
       },
       {
@@ -323,25 +477,7 @@
           "bodyType": "Dynamic",
           "fixedRotation": false,
           "continuousCollision": true,
-          "uid": 124
-        }
-      },
-      {
-        "type": "diamond2DGL.physics.components.BoxCollider",
-        "properties": {
-          "halfSize": {
-            "x": 107.5,
-            "y": 94.5
-          },
-          "origin": {
-            "x": 19.5,
-            "y": 3.0
-          },
-          "offset": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "uid": 125
+          "uid": 57
         }
       }
     ],
@@ -349,23 +485,23 @@
     "isDead": false
   },
   {
-    "uid": 5,
     "name": "Sprite_Entity",
+    "uid": 83,
     "components": [
       {
         "type": "diamond2DGL.engComponents.Transform",
         "properties": {
           "position": {
-            "x": 128.0,
-            "y": 96.0
+            "x": 1.984328,
+            "y": 1.613293
           },
           "scale": {
-            "x": 32.0,
-            "y": 32.0
+            "x": 0.25,
+            "y": 0.25
           },
-          "rotation": 0.0,
+          "rotation": 39.6,
           "zIndex": 0,
-          "uid": 103
+          "uid": 50
         }
       },
       {
@@ -387,24 +523,252 @@
             },
             "texCoords": [
               {
-                "x": 0.14285715,
+                "x": 0.5714286,
                 "y": 0.8333333
               },
               {
-                "x": 0.14285715,
+                "x": 0.5714286,
                 "y": 0.75
               },
               {
-                "x": 0.0,
+                "x": 0.42857143,
                 "y": 0.75
               },
               {
-                "x": 0.0,
+                "x": 0.42857143,
                 "y": 0.8333333
               }
             ]
           },
-          "uid": 104
+          "uid": 51
+        }
+      },
+      {
+        "type": "diamond2DGL.physics.components.BoxCollider",
+        "properties": {
+          "halfSize": {
+            "x": 0.2,
+            "y": 0.2
+          },
+          "origin": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "uid": 52
+        }
+      },
+      {
+        "type": "diamond2DGL.physics.components.RigidBody",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "mass": 2.0,
+          "bodyType": "Dynamic",
+          "fixedRotation": false,
+          "continuousCollision": true,
+          "uid": 56
+        }
+      }
+    ],
+    "toSerialize": true,
+    "isDead": false
+  },
+  {
+    "name": "Sprite_Entity",
+    "uid": 84,
+    "components": [
+      {
+        "type": "diamond2DGL.engComponents.Transform",
+        "properties": {
+          "position": {
+            "x": 2.227077,
+            "y": 1.6
+          },
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 39.6,
+          "zIndex": 0,
+          "uid": 50
+        }
+      },
+      {
+        "type": "diamond2DGL.engComponents.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "path": "assets/testing/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "texCoords": [
+              {
+                "x": 0.5714286,
+                "y": 0.8333333
+              },
+              {
+                "x": 0.5714286,
+                "y": 0.75
+              },
+              {
+                "x": 0.42857143,
+                "y": 0.75
+              },
+              {
+                "x": 0.42857143,
+                "y": 0.8333333
+              }
+            ]
+          },
+          "uid": 51
+        }
+      },
+      {
+        "type": "diamond2DGL.physics.components.BoxCollider",
+        "properties": {
+          "halfSize": {
+            "x": 0.2,
+            "y": 0.2
+          },
+          "origin": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "uid": 52
+        }
+      },
+      {
+        "type": "diamond2DGL.physics.components.RigidBody",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "mass": 2.0,
+          "bodyType": "Dynamic",
+          "fixedRotation": false,
+          "continuousCollision": true,
+          "uid": 56
+        }
+      }
+    ],
+    "toSerialize": true,
+    "isDead": false
+  },
+  {
+    "name": "Sprite_Entity",
+    "uid": 85,
+    "components": [
+      {
+        "type": "diamond2DGL.engComponents.Transform",
+        "properties": {
+          "position": {
+            "x": 1.8478475,
+            "y": 2.0353475
+          },
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 39.6,
+          "zIndex": 0,
+          "uid": 50
+        }
+      },
+      {
+        "type": "diamond2DGL.engComponents.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "path": "assets/testing/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "texCoords": [
+              {
+                "x": 0.5714286,
+                "y": 0.8333333
+              },
+              {
+                "x": 0.5714286,
+                "y": 0.75
+              },
+              {
+                "x": 0.42857143,
+                "y": 0.75
+              },
+              {
+                "x": 0.42857143,
+                "y": 0.8333333
+              }
+            ]
+          },
+          "uid": 51
+        }
+      },
+      {
+        "type": "diamond2DGL.physics.components.BoxCollider",
+        "properties": {
+          "halfSize": {
+            "x": 0.2,
+            "y": 0.2
+          },
+          "origin": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "uid": 52
+        }
+      },
+      {
+        "type": "diamond2DGL.physics.components.RigidBody",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "mass": 2.0,
+          "bodyType": "Dynamic",
+          "fixedRotation": false,
+          "continuousCollision": true,
+          "uid": 56
         }
       }
     ],

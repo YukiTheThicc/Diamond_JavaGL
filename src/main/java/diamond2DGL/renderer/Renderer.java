@@ -51,7 +51,7 @@ public class Renderer {
             }
         }
         if (!added) {
-            RenderBatch batch = new RenderBatch(MAX_BATCH_SIZE, sprite.parent.transform.zIndex);
+            RenderBatch batch = new RenderBatch(MAX_BATCH_SIZE, sprite.parent.transform.zIndex, this);
             batch.start();
             batches.add(batch);
             batch.addSprite(sprite);
@@ -70,8 +70,8 @@ public class Renderer {
 
     public void render() {
         currentShader.use();
-        for (RenderBatch batch : batches) {
-            batch.render(Container.getCamera());
+        for (int i = 0; i < batches.size(); i++) {
+            batches.get(i).render(Container.getCamera());
         }
     }
 }

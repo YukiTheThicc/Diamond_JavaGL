@@ -1,7 +1,13 @@
 package diamond2DGL;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import diamond2DGL.GSONDeserializers.ComponentDeserializer;
+import diamond2DGL.GSONDeserializers.EntityDeserializer;
 import diamond2DGL.engComponents.Component;
+import diamond2DGL.engComponents.SpriteRenderer;
 import diamond2DGL.engComponents.Transform;
+import diamond2DGL.utils.AssetManager;
 import imgui.ImGui;
 
 import java.util.ArrayList;
@@ -12,10 +18,10 @@ public class Entity {
     // ATTRIBUTES
     private static int ID_COUNTER = 0;
 
-    private int uid = -1;
-    private String name;
-    private List<Component> components;
     public transient Transform transform;
+    public String name;
+    private int uid = -1;
+    private List<Component> components;
     private boolean toSerialize = true;
     private boolean isDead = false;
 
@@ -30,14 +36,6 @@ public class Entity {
     // GETTERS & SETTERS
     public int getUid() {
         return this.uid;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public List<Component> getComponents() {
@@ -128,5 +126,26 @@ public class Entity {
         }
     }
 
+    public Entity copy() {
+        // TODO - Do it cleaner next time plis
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Component.class, new ComponentDeserializer())
+                .registerTypeAdapter(Entity.class, new EntityDeserializer())
+                .create();
+        String entityJson = gson.toJson(this);
+        Entity e = gson.fromJson(entityJson, Entity.class);
+        e.generateUid();
+        for (Component c : e.getComponents()) {
+            c.generateId();
+        }
+        SpriteRenderer sprite = e.getComponent(SpriteRenderer.class);
+        if (sprite != null && sprite.getTexture() != null) {
+            sprite.setTexture(AssetManager.getTexture(sprite.getTexture().getPath()));
+        }
+        return e;
+    }
 
+    public void generateUid() {
+        this.uid = ID_COUNTER++;
+    }
 }

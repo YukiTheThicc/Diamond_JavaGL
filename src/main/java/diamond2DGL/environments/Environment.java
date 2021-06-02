@@ -60,6 +60,10 @@ public class Environment {
         return result.orElse(null);
     }
 
+    public Physics getPhysics() {
+        return physics;
+    }
+
     // METHODS
     public void init() {
         this.camera = new Camera(new Vector2f(0, 0));

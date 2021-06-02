@@ -12,6 +12,7 @@ public class EditorEventHandler implements Observer {
     public void onNotify(Entity entity, Event event) {
         switch (event.type) {
             case Play:
+                Container.getEnv().getPhysics().reset();
                 Container.playEditor();
                 Container.getEnv().save();
                 Container.getGame().selectEnvironment(new EditorEnvFactory());

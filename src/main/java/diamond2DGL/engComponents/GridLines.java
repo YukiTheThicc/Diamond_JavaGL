@@ -15,21 +15,21 @@ public class GridLines extends Component {
         Vector2f cameraPos = camera.pos;
         Vector2f projectionSize = camera.getProjectionSize();
 
-        int firstX = ((int)(cameraPos.x / Settings.GRID_WIDTH) - 1) * Settings.GRID_WIDTH;
-        int firstY = ((int)(cameraPos.y / Settings.GRID_HEIGHT) - 1) * Settings.GRID_HEIGHT;
+        float firstX = ((int)(cameraPos.x / Settings.GRID_WIDTH) - 1) * Settings.GRID_WIDTH;
+        float firstY = ((int)(cameraPos.y / Settings.GRID_HEIGHT) - 1) * Settings.GRID_HEIGHT;
 
         int numHLines = (int)((projectionSize.y * camera.getZoom()) / Settings.GRID_HEIGHT) + 2;
         int numVLines = (int)((projectionSize.x * camera.getZoom()) / Settings.GRID_WIDTH) + 2;
 
-        int width = (int)(projectionSize.x * camera.getZoom())+ Settings.GRID_WIDTH * 2;
-        int height = (int)(projectionSize.y * camera.getZoom())+ Settings.GRID_HEIGHT * 2;
+        float width = (int)(projectionSize.x * camera.getZoom())+ Settings.GRID_WIDTH * 2;
+        float height = (int)(projectionSize.y * camera.getZoom())+ Settings.GRID_HEIGHT * 2;
 
         Vector3f color = new Vector3f(0.66f, 0.66f, 0.66f);
 
         int maxLines = Math.max(numVLines, numHLines);
 
-        int x = 0;
-        int y = 0;
+        float x = 0;
+        float y = 0;
         int i = 0;
         for (i = 0; i < maxLines; i++) {
             x = firstX + (Settings.GRID_WIDTH * i);

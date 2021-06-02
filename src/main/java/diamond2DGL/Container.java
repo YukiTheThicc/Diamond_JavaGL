@@ -5,6 +5,7 @@ import diamond2DGL.observers.EventSystem;
 import diamond2DGL.observers.Observer;
 import diamond2DGL.observers.events.Event;
 import diamond2DGL.observers.handlers.EditorEventHandler;
+import diamond2DGL.physics.Physics;
 import diamond2DGL.renderer.DebugDraw;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -12,7 +13,7 @@ import static org.lwjgl.glfw.GLFW.*;
 /*
  * SINGLETON - Game container class
  */
-public class Container implements Runnable {
+public class Container {
 
     // ATTRIBUTES
     private static Container container = null;
@@ -51,6 +52,7 @@ public class Container implements Runnable {
     }
 
     public static void playEditor() {
+        getEnv().getPhysics().getWorld().clearForces();
         get().editorPlaying = true;
     }
 

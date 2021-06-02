@@ -8,7 +8,9 @@ public class Camera {
 
     // ATTRIBUTES
     private Matrix4f pMatrix, vMatrix, invProj, invView;
-    private Vector2f projectionSize = new Vector2f(32.0f * 40.0f, 32.0f * 21.0f);
+    private float pWidth = 6f;
+    private float pHeight = 3f;
+    private Vector2f projectionSize = new Vector2f(pWidth, pHeight);
     private float zoom = 1.0f;
     public Vector2f pos;
 
@@ -26,8 +28,6 @@ public class Camera {
     public Matrix4f getpMatrix() {
         return this.pMatrix;
     }
-
-
 
     public Matrix4f getvMatrix() {
         Vector3f cameraFront = new Vector3f(0.0f, 0.0f, -1.0f);

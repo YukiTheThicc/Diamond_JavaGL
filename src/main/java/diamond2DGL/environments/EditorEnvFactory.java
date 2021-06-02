@@ -79,7 +79,7 @@ public class EditorEnvFactory extends EnvironmentFactory{
 
             ImGui.pushID(i);
             if (ImGui.imageButton(id, sprWidth, sprHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y)) {
-                Entity tile = EntityFactory.createSpriteEntity(sprite, 32, 32);
+                Entity tile = EntityFactory.createSpriteEntity(sprite, 0.25f, 0.25f);
                 editor.getComponent(MouseControls.class).pickupEntity(tile);
             }
             ImGui.popID();
