@@ -1,13 +1,15 @@
 package diamond2DGL.physics.components;
 
+import diamond2DGL.engComponents.Component;
 import diamond2DGL.renderer.DebugDraw;
 import org.joml.Vector2f;
 
-public class BoxCollider extends Collider {
+public class BoxCollider extends Component {
 
     // ATTRIBUTES
     private Vector2f halfSize = new Vector2f(1);
     private Vector2f origin = new Vector2f();
+    private Vector2f offset = new Vector2f();
 
     // CONSTRUCTORS
 
@@ -16,12 +18,20 @@ public class BoxCollider extends Collider {
         return halfSize;
     }
 
-    public void setHalfSize(Vector2f halfSize) {
-        this.halfSize = halfSize;
+    public Vector2f getOffset() {
+        return offset;
     }
 
     public Vector2f getOrigin() {
         return origin;
+    }
+
+    public void setHalfSize(Vector2f halfSize) {
+        this.halfSize = halfSize;
+    }
+
+    public void setOffset(Vector2f offset) {
+        this.offset.set(offset);
     }
 
     // METHODS

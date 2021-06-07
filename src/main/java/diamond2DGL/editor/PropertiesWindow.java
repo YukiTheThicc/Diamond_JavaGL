@@ -1,73 +1,52 @@
 package diamond2DGL.editor;
 
-import diamond2DGL.Container;
 import diamond2DGL.Entity;
-import diamond2DGL.engComponents.NonPickable;
-import diamond2DGL.listeners.MouseListener;
+import diamond2DGL.engComponents.SpriteRenderer;
 import diamond2DGL.physics.components.BoxCollider;
 import diamond2DGL.physics.components.CircleCollider;
 import diamond2DGL.physics.components.RigidBody;
+import diamond2DGL.renderer.PickingTexture;
 import imgui.ImGui;
+import org.joml.Vector4f;
 
-import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PropertiesWindow {
 
     // ATTRIBUTES
+    private List<Entity> activeEntities;
+    private List<Vector4f> activeEntitiesColors;
     private Entity activeEntity = null;
     private PickingTexture pickingTexture;
-    private float debounce = 0.2f;
 
     // CONSTRUCTORS
     public PropertiesWindow(PickingTexture pickingTexture) {
+        this.activeEntities = new ArrayList<>();
+        this.activeEntitiesColors = new ArrayList<>();
         this.pickingTexture = pickingTexture;
     }
 
     // GETTERS & SETTERS
     public Entity getActiveEntity() {
-        return activeEntity;
+        return activeEntities.size() == 1 ? this.activeEntities.get(0) : null;
+    }
+
+    public List<Entity> getActiveEntities() {
+        return activeEntities;
     }
 
     public void setActiveEntity(Entity activeEntity) {
-        this.activeEntity = activeEntity;
+        if (activeEntity != null) {
+            clearSelected();
+            this.activeEntities.add(activeEntity);
+        }
     }
 
     // METHODS
-    public void editorUpdate (float dT) {
-        debounce -= dT;
-        if (MouseListener.mouseButtonDown(GLFW_MOUSE_BUTTON_LEFT) && debounce < 0f) {
-            int x = (int)MouseListener.getScreenX();
-            int y = (int)MouseListener.getScreenY();
-            int entityId = pickingTexture.readPixel(x, y);
-            Entity entity = Container.getEnv().getEntity(entityId);
-            if (entity != null && entity.getComponent(NonPickable.class) == null) {
-                activeEntity = entity;
-            } else if (entity == null && !MouseListener.isDragging()) {
-                activeEntity = null;
-            }
-            this.debounce = 0.2f;
-        }
-        imgui();
-    }
-
-    public void update (float dT) {
-        debounce -= dT;
-        if (MouseListener.mouseButtonDown(GLFW_MOUSE_BUTTON_LEFT) && debounce < 0f) {
-            int x = (int) MouseListener.getScreenX();
-            int y = (int) MouseListener.getScreenY();
-            int entityId = pickingTexture.readPixel(x, y);
-            Entity entity = Container.getEnv().getEntity(entityId);
-            if (entity != null && entity.getComponent(NonPickable.class) == null) {
-                activeEntity = entity;
-            } else if (entity == null && !MouseListener.isDragging()) {
-                activeEntity = null;
-            }
-            this.debounce = 0.2f;
-        }
-    }
-
     public void imgui() {
-        if (activeEntity != null) {
+        if (activeEntities.size() == 1 && activeEntities.get(0) != null ) {
+            activeEntity = activeEntities.get(0);
             ImGui.begin("Properties");
 
             if (ImGui.beginPopupContextWindow("ComponentAdder")) {
@@ -92,5 +71,31 @@ public class PropertiesWindow {
             activeEntity.imgui();
             ImGui.end();
         }
+    }
+
+    public void addActiveEntity(Entity e) {
+        SpriteRenderer spr = e.getComponent(SpriteRenderer.class);
+        if (spr != null) {
+            this.activeEntitiesColors.add(new Vector4f(spr.getColor()));
+            spr.setColor(new Vector4f(0.8f, 0.8f, 0.0f, 0.8f));
+        } else {
+            this.activeEntitiesColors.add(new Vector4f());
+        }
+        this.activeEntities.add(e);
+    }
+
+    public void clearSelected() {
+        if (activeEntitiesColors.size() > 0) {
+            int i = 0;
+            for (Entity e : activeEntities) {
+                SpriteRenderer spr = e.getComponent(SpriteRenderer.class);
+                if (spr != null) {
+                    spr.setColor(activeEntitiesColors.get(i));
+                }
+                i++;
+            }
+        }
+        this.activeEntities.clear();
+        this.activeEntitiesColors.clear();
     }
 }

@@ -1,6 +1,6 @@
 package diamond2DGL;
 
-import diamond2DGL.environments.EditorEnvFactory;
+import blackDiamonds.envs.EditorEnvFactory;
 import diamond2DGL.environments.Environment;
 import diamond2DGL.environments.EnvironmentFactory;
 

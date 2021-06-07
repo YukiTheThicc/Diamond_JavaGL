@@ -134,6 +134,7 @@ public class Environment {
                 .setPrettyPrinting()
                 .registerTypeAdapter(Component.class, new ComponentDeserializer())
                 .registerTypeAdapter(Entity.class, new EntityDeserializer())
+                .enableComplexMapKeySerialization()
                 .create();
 
         try {
@@ -156,6 +157,7 @@ public class Environment {
                 .setPrettyPrinting()
                 .registerTypeAdapter(Component.class, new ComponentDeserializer())
                 .registerTypeAdapter(Entity.class, new EntityDeserializer())
+                .enableComplexMapKeySerialization()
                 .create();
         String inFile = "";
         try {

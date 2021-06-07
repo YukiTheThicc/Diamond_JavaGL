@@ -1,9 +1,9 @@
 package diamond2DGL.observers.handlers;
 
 import diamond2DGL.Container;
-import diamond2DGL.Display;
+import diamond2DGL.Window;
 import diamond2DGL.Entity;
-import diamond2DGL.environments.EditorEnvFactory;
+import blackDiamonds.envs.EditorEnvFactory;
 import diamond2DGL.observers.Observer;
 import diamond2DGL.observers.events.Event;
 
@@ -25,7 +25,7 @@ public class EditorEventHandler implements Observer {
                 Container.getEnv().save();
                 break;
             case LoadLevel:
-                Display.getImGuiLayer().getPropertiesWindow().setActiveEntity(null);
+                Window.getImGuiLayer().getPropertiesWindow().setActiveEntity(null);
                 Container.getGame().selectEnvironment(new EditorEnvFactory());
                 break;
         }

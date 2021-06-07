@@ -4,6 +4,7 @@ import diamond2DGL.Entity;
 import diamond2DGL.editor.DiaImGui;
 import imgui.ImGui;
 import imgui.type.ImInt;
+import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -29,7 +30,23 @@ public abstract class Component {
 
     }
 
-    public void update(float dT) {
+    public void update(float dt) {
+
+    }
+
+    public void beginCollision(Entity entity, Contact contact, Vector2f normal) {
+
+    }
+
+    public void endCollision(Entity entity, Contact contact, Vector2f normal) {
+
+    }
+
+    public void preSolve(Entity entity, Contact contact, Vector2f normal) {
+
+    }
+
+    public void postSolve(Entity entity, Contact contact, Vector2f normal) {
 
     }
 

@@ -1,6 +1,6 @@
 package diamond2DGL.engComponents;
 
-import diamond2DGL.Display;
+import diamond2DGL.Window;
 import diamond2DGL.listeners.KeyListener;
 
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_E;
@@ -22,8 +22,8 @@ public class GizmoSystem extends Component{
     // METHODS
     @Override
     public void start() {
-        parent.addComponent(new TranslateGizmo(gizmos.getSprite(1), Display.getImGuiLayer().getPropertiesWindow()));
-        parent.addComponent(new ScaleGizmo(gizmos.getSprite(2), Display.getImGuiLayer().getPropertiesWindow()));
+        parent.addComponent(new TranslateGizmo(gizmos.getSprite(1), Window.getImGuiLayer().getPropertiesWindow()));
+        parent.addComponent(new ScaleGizmo(gizmos.getSprite(2), Window.getImGuiLayer().getPropertiesWindow()));
     }
 
     @Override

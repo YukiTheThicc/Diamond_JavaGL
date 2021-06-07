@@ -3,6 +3,7 @@ package diamond2DGL.editor;
 import imgui.ImGui;
 import imgui.flag.ImGuiCol;
 import imgui.flag.ImGuiStyleVar;
+import imgui.type.ImString;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
@@ -42,7 +43,7 @@ public class DiaImGui {
 
         ImGui.sameLine();
         float[] vecValuesX = {values.x};
-        ImGui.dragFloat("##x", vecValuesX, 0.1f);
+        ImGui.dragFloat("##x", vecValuesX, 0.025f);
         ImGui.popItemWidth();
         ImGui.sameLine();
 
@@ -57,7 +58,7 @@ public class DiaImGui {
 
         ImGui.sameLine();
         float[] vecValuesY = {values.y};
-        ImGui.dragFloat("##y", vecValuesY, 0.1f);
+        ImGui.dragFloat("##y", vecValuesY, 0.025f);
         ImGui.popItemWidth();
         ImGui.sameLine();
 
@@ -72,6 +73,10 @@ public class DiaImGui {
     }
 
     public static float dragFloat(String label, float value) {
+        return dragFloat(label, value, 0.025f);
+    }
+
+    public static float dragFloat(String label, float value, float step) {
         ImGui.pushID(label);
 
         ImGui.columns(2);
@@ -80,7 +85,7 @@ public class DiaImGui {
         ImGui.nextColumn();
 
         float[] valArr = {value};
-        ImGui.dragFloat("##dragFloat", valArr, 0.1f);
+        ImGui.dragFloat("##dragFloat", valArr, step);
 
         ImGui.columns(1);
         ImGui.popID();
@@ -124,5 +129,26 @@ public class DiaImGui {
         ImGui.popID();
 
         return res;
+    }
+
+    public static String inputText(String label, String text) {
+        ImGui.pushID(label);
+
+        ImGui.columns(2);
+        ImGui.setColumnWidth(0, DEFAULT_COLUMN_WIDTH);
+        ImGui.text(label);
+        ImGui.nextColumn();
+
+        ImString out = new ImString(text, 256);
+        if (ImGui.inputText("##" + label, out)) {
+            ImGui.columns(1);
+            ImGui.popID();
+            return out.get();
+        }
+
+        ImGui.columns(1);
+        ImGui.popID();
+
+        return text;
     }
 }

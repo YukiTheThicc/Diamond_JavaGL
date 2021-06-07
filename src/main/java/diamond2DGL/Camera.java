@@ -8,8 +8,8 @@ public class Camera {
 
     // ATTRIBUTES
     private Matrix4f pMatrix, vMatrix, invProj, invView;
-    private float pWidth = 6f;
-    private float pHeight = 3f;
+    private int pWidth = 6;
+    private int pHeight = 3;
     private Vector2f projectionSize = new Vector2f(pWidth, pHeight);
     private float zoom = 1.0f;
     public Vector2f pos;

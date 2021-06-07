@@ -1,6 +1,6 @@
 package diamond2DGL.editor;
 
-import diamond2DGL.Display;
+import diamond2DGL.Window;
 import diamond2DGL.listeners.MouseListener;
 import diamond2DGL.observers.EventSystem;
 import diamond2DGL.observers.events.Event;
@@ -10,15 +10,26 @@ import imgui.ImVec2;
 import imgui.flag.ImGuiWindowFlags;
 import org.joml.Vector2f;
 
-
 public class ViewPortWindow {
 
-    private float leftX, rightX, topY, bottomY;
+    // ATTRIBUTES
+    private int leftX, rightX, topY, bottomY;
+    private int sizeX, sizeY;
     private boolean isPlaying = false;
 
-    public void imgui(){
-        ImGui.begin("Game ViewPort", ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse
-        | ImGuiWindowFlags.MenuBar);
+    // GETTERS & SETTERS
+    public int getSizeX() {
+        return sizeX;
+    }
+
+    public int getSizeY() {
+        return sizeY;
+    }
+
+    // METHODS
+    public void imgui() {
+        ImGui.begin("Game Viewport", ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse
+                | ImGuiWindowFlags.MenuBar);
 
         ImGui.beginMenuBar();
         if (ImGui.menuItem("Play", "", isPlaying, !isPlaying)) {
@@ -31,24 +42,24 @@ public class ViewPortWindow {
         }
         ImGui.endMenuBar();
 
-        ImVec2 portSize = getMaxPortSize();
-        ImVec2 portPos = getCenteredPos(portSize);
-        ImGui.setCursorPos(portPos.x, portPos.y);
 
-        ImVec2 topLeft = new ImVec2();
-        ImGui.getCursorScreenPos(topLeft);
-        topLeft.x -= ImGui.getScrollX();
-        topLeft.y -= ImGui.getScrollY();
-        leftX = topLeft.x;
-        bottomY = topLeft.y;
-        rightX = topLeft.x + portSize.x;
-        topY = topLeft.y + portSize.y;
+        ImGui.setCursorPos(ImGui.getCursorPosX(), ImGui.getCursorPosY());
+        ImVec2 windowSize = getLargestSizeForViewport();
+        ImVec2 windowPos = getCenteredPositionForViewport(windowSize);
+        ImGui.setCursorPos(windowPos.x, windowPos.y);
+        this.sizeX = (int) windowSize.x;
+        this.sizeY = (int) windowSize.y;
+        leftX = (int) windowPos.x + 8;
+        rightX = (int) windowPos.x + sizeX + 8;
+        bottomY = (int) windowPos.y + 26;
+        topY = (int) windowPos.y + sizeY + 26;
 
-        int textureID = Display.getFrameBuffer().getTextureID();
-        ImGui.image(textureID, portSize.x, portSize.y, 0,1,1,0);
+        int textureId = Window.getFrameBuffer().getTextureID();
+        ImGui.image(textureId, sizeX, sizeY, 0, 1, 1, 0);
+        //System.out.println("SizeX: " + sizeX + ", SizeY: " + sizeY);
 
-        MouseListener.setViewPortPos(new Vector2f(topLeft.x, topLeft.y));
-        MouseListener.setViewPortSize(new Vector2f(portSize.x, portSize.y));
+        MouseListener.setGameViewportPos(new Vector2f(windowPos.x + 8, windowPos.y + 26));
+        MouseListener.setGameViewportSize(new Vector2f(sizeX, sizeY));
 
         ImGui.end();
     }
@@ -58,32 +69,27 @@ public class ViewPortWindow {
                 MouseListener.getY() >= bottomY && MouseListener.getY() <= topY;
     }
 
-    private ImVec2 getMaxPortSize() {
+    private ImVec2 getLargestSizeForViewport() {
         ImVec2 windowSize = new ImVec2();
         ImGui.getContentRegionAvail(windowSize);
-        windowSize.x -= ImGui.getScrollX();
-        windowSize.y -= ImGui.getScrollY();
-
         float aspectWidth = windowSize.x;
-        float aspectHeight = aspectWidth / Display.getTargetAspectRatio();
+        float aspectHeight = aspectWidth / Window.getTargetAspectRatio();
         if (aspectHeight > windowSize.y) {
-            // Put black bars
+            // We must switch to pillarbox mode
             aspectHeight = windowSize.y;
-            aspectWidth = aspectHeight * Display.getTargetAspectRatio();
+            aspectWidth = aspectHeight * Window.getTargetAspectRatio();
         }
 
         return new ImVec2(aspectWidth, aspectHeight);
     }
 
-    private ImVec2 getCenteredPos(ImVec2 aspectSize) {
+    private ImVec2 getCenteredPositionForViewport(ImVec2 aspectSize) {
         ImVec2 windowSize = new ImVec2();
         ImGui.getContentRegionAvail(windowSize);
-        windowSize.x -= ImGui.getScrollX();
-        windowSize.y -= ImGui.getScrollY();
 
-        float portX = (windowSize.x / 2.0f) - (aspectSize.x) / 2.0f;
-        float portY = (windowSize.y / 2.0f) - (aspectSize.y) / 2.0f;
+        float viewportX = (windowSize.x / 2.0f) - (aspectSize.x / 2.0f);
+        float viewportY = (windowSize.y / 2.0f) - (aspectSize.y / 2.0f);
 
-        return  new ImVec2(portX + ImGui.getCursorPosX(), portY + ImGui.getCursorPosY());
+        return new ImVec2(viewportX + ImGui.getCursorPosX(), viewportY + ImGui.getCursorPosY());
     }
 }

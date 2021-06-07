@@ -68,10 +68,12 @@ public class Gizmo extends Component {
     }
 
     @Override
-    public void update(float dT) {
+    public void update(float dt) {
         if (using) {
             setInactive();
         }
+        this.xAxisObject.getComponent(SpriteRenderer.class).setColor(new Vector4f(0, 0, 0, 0));
+        this.yAxisObject.getComponent(SpriteRenderer.class).setColor(new Vector4f(0, 0, 0, 0));
     }
 
     @Override
@@ -81,19 +83,6 @@ public class Gizmo extends Component {
         this.activeEntity = this.propertiesWindow.getActiveEntity();
         if (this.activeEntity != null) {
             this.setActive();
-            // TODO: Move to editorKeyBinding component class
-            if (KeyListener.isKeyPressed(GLFW_KEY_LEFT_CONTROL) && KeyListener.keyBeginPress(GLFW_KEY_D)) {
-                Entity entity = this.activeEntity.copy();
-                Container.getEnv().addEntity(entity);
-                entity.transform.position.add(0.1f, 0.1f);
-                this.propertiesWindow.setActiveEntity(entity);
-                return;
-            } else if (KeyListener.keyBeginPress(GLFW_KEY_DELETE)) {
-                activeEntity.destroy();
-                this.setInactive();
-                this.propertiesWindow.setActiveEntity(null);
-                return;
-            }
         } else {
             this.setInactive();
             return;
@@ -106,8 +95,8 @@ public class Gizmo extends Component {
             xAxisActive = true;
             yAxisActive = false;
         } else if ((yAxisHot || yAxisActive) && MouseListener.isDragging() && MouseListener.mouseButtonDown(GLFW_MOUSE_BUTTON_LEFT)) {
-            xAxisActive = false;
             yAxisActive = true;
+            xAxisActive = false;
         } else {
             xAxisActive = false;
             yAxisActive = false;
@@ -133,27 +122,29 @@ public class Gizmo extends Component {
     }
 
     private boolean checkXHoverState() {
-        Vector2f mousePos = new Vector2f(MouseListener.getOrthoX(), MouseListener.getOrthoY());
-        if (mousePos.x <= xAxisObject.transform.position.x + (height / 2f) &&
-                mousePos.x >= xAxisObject.transform.position.x - (height / 2f) &&
-                mousePos.y <= xAxisObject.transform.position.y + (width / 2f) &&
-                mousePos.y >= xAxisObject.transform.position.y - (width / 2f)) {
+        Vector2f mousePos = new Vector2f(MouseListener.getWorld());
+        if (mousePos.x <= xAxisObject.transform.position.x + (height / 2.0f) &&
+                mousePos.x >= xAxisObject.transform.position.x - (width / 2.0f) &&
+                mousePos.y >= xAxisObject.transform.position.y - (height / 2.0f) &&
+                mousePos.y <= xAxisObject.transform.position.y + (width / 2.0f)) {
             xAxisSprite.setColor(xAxisColorHover);
             return true;
         }
+
         xAxisSprite.setColor(xAxisColor);
         return false;
     }
 
     private boolean checkYHoverState() {
-        Vector2f mousePos = new Vector2f(MouseListener.getOrthoX(), MouseListener.getOrthoY());
-        if (mousePos.x <= yAxisObject.transform.position.x + (width / 2f)&&
-                mousePos.x >= yAxisObject.transform.position.x - (width / 2f) &&
-                mousePos.y <= yAxisObject.transform.position.y + (height / 2f) &&
-                mousePos.y >= yAxisObject.transform.position.y - (height / 2f)) {
+        Vector2f mousePos = new Vector2f(MouseListener.getWorld());
+        if (mousePos.x <= yAxisObject.transform.position.x + (width / 2.0f) &&
+                mousePos.x >= yAxisObject.transform.position.x - (width / 2.0f) &&
+                mousePos.y <= yAxisObject.transform.position.y + (height / 2.0f) &&
+                mousePos.y >= yAxisObject.transform.position.y - (height / 2.0f)) {
             yAxisSprite.setColor(yAxisColorHover);
             return true;
         }
+
         yAxisSprite.setColor(yAxisColor);
         return false;
     }

@@ -1,6 +1,5 @@
 package diamond2DGL.renderer;
 
-import diamond2DGL.Camera;
 import diamond2DGL.Container;
 import diamond2DGL.Entity;
 import diamond2DGL.engComponents.SpriteRenderer;

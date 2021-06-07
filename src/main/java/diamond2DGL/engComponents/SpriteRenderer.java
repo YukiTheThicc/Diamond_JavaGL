@@ -92,7 +92,7 @@ public class SpriteRenderer extends Component {
     }
 
     @Override
-    public void update(float dT) {
+    public void update(float dt) {
         if (!this.lastTransform.equals(this.parent.transform)) {
             this.parent.transform.copy(this.lastTransform);
             this.hasChanged = true;

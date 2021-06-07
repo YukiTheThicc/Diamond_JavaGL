@@ -131,6 +131,7 @@ public class Entity {
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(Component.class, new ComponentDeserializer())
                 .registerTypeAdapter(Entity.class, new EntityDeserializer())
+                .enableComplexMapKeySerialization()
                 .create();
         String entityJson = gson.toJson(this);
         Entity e = gson.fromJson(entityJson, Entity.class);

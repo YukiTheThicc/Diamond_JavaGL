@@ -61,9 +61,10 @@ public class Transform extends Component{
 
     @Override
     public void imgui() {
+        parent.name = DiaImGui.inputText("Name: ", parent.name);
         DiaImGui.drawVec2Control("Position", this.position);
         DiaImGui.drawVec2Control("Scale", this.scale, 32.0f);
-        this.rotation = DiaImGui.dragFloat("Rotation", this.rotation);
+        this.rotation = DiaImGui.dragFloat("Rotation", this.rotation, 1f);
         this.zIndex = DiaImGui.dragInt("ZIndex", this.zIndex);
     }
 
