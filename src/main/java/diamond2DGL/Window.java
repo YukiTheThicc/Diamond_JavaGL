@@ -31,9 +31,9 @@ public class Window {
     private IntBuffer posX, posY;
     private String title;
     private long glfwWindow;
+    private static Window window = null;
     private long audioContext;
     private long audioDevice;
-    private static Window window = null;
     private ImGUILayer imGUILayer;
     private FrameBuffer frameBuffer;
     private PickingTexture pickingTexture;
@@ -171,7 +171,7 @@ public class Window {
         frameBuffer = new FrameBuffer(sizeX, sizeY);
         pickingTexture = new PickingTexture(sizeX, sizeY);
         glViewport((int)getPosition().x,(int)getPosition().y, sizeX, sizeY);
-        imGUILayer = new ImGUILayer(glfwWindow, pickingTexture);
+        imGUILayer = new ImGUILayer(glfwWindow);
         imGUILayer.initImGui();
 
         this.defaultShader = AssetManager.getShader("assets/shaders/default.glsl");
@@ -209,9 +209,9 @@ public class Window {
         Renderer.bindShader(defaultShader);
     }
 
-    public void endFrame(float dT) {
+    public void endFrame() {
         frameBuffer.unBind();
-        imGUILayer.update(dT);
+        imGUILayer.update();
         MouseListener.endFrame();
         KeyListener.endFrame();
         glfwSwapBuffers(glfwWindow);

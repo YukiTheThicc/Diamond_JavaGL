@@ -1,14 +1,10 @@
-package diamond2DGL.environments;
+package diamond2DGL;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import diamond2DGL.Camera;
-import diamond2DGL.Entity;
 import diamond2DGL.GSONDeserializers.ComponentDeserializer;
 import diamond2DGL.GSONDeserializers.EntityDeserializer;
 import diamond2DGL.engComponents.Component;
-import diamond2DGL.observers.Observer;
-import diamond2DGL.observers.events.Event;
 import diamond2DGL.physics.Physics;
 import diamond2DGL.renderer.Renderer;
 import org.joml.Vector2f;
@@ -24,6 +20,7 @@ import java.util.Optional;
 public class Environment {
 
     // ATTRIBUTES
+    private String name;
     private boolean isRunning;
     private Renderer renderer;
     private Camera camera;
@@ -32,7 +29,8 @@ public class Environment {
     private Physics physics;
 
     // CONSTRUCTORS
-    public Environment(EnvironmentFactory factory) {
+    public Environment(EnvironmentFactory factory, String name) {
+        this.name = name;
         this.factory = factory;
         this.physics = new Physics();
         this.renderer = new Renderer();
@@ -41,6 +39,10 @@ public class Environment {
     }
 
     // GETTERS & SETTERS
+    public String getName() {
+        return name;
+    }
+
     public int getFPS(float dT) {
         return Math.round(1.0f / dT);
     }

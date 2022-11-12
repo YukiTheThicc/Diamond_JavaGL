@@ -1,6 +1,6 @@
 package diamond2DGL.engComponents;
 
-import diamond2DGL.editor.DiaImGui;
+import diamond2DGL.imgui.DiaImGui;
 import org.joml.Vector2f;
 
 public class Transform extends Component{

@@ -1,13 +1,13 @@
 package diamond2DGL.observers.handlers;
 
-import diamond2DGL.Container;
-import diamond2DGL.Window;
-import diamond2DGL.Entity;
 import blackDiamonds.envs.EditorEnvFactory;
+import diamond2DGL.Container;
+import diamond2DGL.Entity;
+import diamond2DGL.Window;
 import diamond2DGL.observers.Observer;
 import diamond2DGL.observers.events.Event;
 
-public class EditorEventHandler implements Observer {
+public class DianEventListener implements Observer {
     @Override
     public void onNotify(Entity entity, Event event) {
         switch (event.type) {

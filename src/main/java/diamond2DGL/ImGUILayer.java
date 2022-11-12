@@ -1,9 +1,8 @@
 package diamond2DGL;
 
-import diamond2DGL.editor.*;
+import diamond2DGL.imgui.*;
 import diamond2DGL.listeners.KeyListener;
 import diamond2DGL.listeners.MouseListener;
-import diamond2DGL.renderer.PickingTexture;
 import imgui.*;
 import imgui.callback.ImStrConsumer;
 import imgui.callback.ImStrSupplier;
@@ -31,14 +30,16 @@ public class ImGUILayer {
     private PropertiesWindow propertiesWindow;
     private MenuBar menuBar;
     private EnvHierarchyWindow envHierarchyWindow;
+    private CameraWindow cameraWindow;
 
     // CONSTRUCTORS
-    public ImGUILayer(long windowPtr, PickingTexture pickingTexture) {
+    public ImGUILayer(long windowPtr) {
         this.glfwWindow = windowPtr;
         this.viewPortWindow = new ViewPortWindow();
-        this.propertiesWindow = new PropertiesWindow(pickingTexture);
+        this.propertiesWindow = new PropertiesWindow();
         this.menuBar = new MenuBar();
         this.envHierarchyWindow = new EnvHierarchyWindow();
+        this.cameraWindow = new CameraWindow();
     }
 
     //GETTERS & SETTERS
@@ -48,6 +49,18 @@ public class ImGUILayer {
 
     public ViewPortWindow getViewPortWindow() {
         return this.viewPortWindow;
+    }
+
+    public MenuBar getMenuBar() {
+        return menuBar;
+    }
+
+    public EnvHierarchyWindow getEnvHierarchyWindow() {
+        return envHierarchyWindow;
+    }
+
+    public CameraWindow getCameraWindow() {
+        return cameraWindow;
     }
 
     // METHODS
@@ -151,7 +164,7 @@ public class ImGUILayer {
 
             // Fonts merge example
             fontConfig.setPixelSnapH(true);
-            fontAtlas.addFontFromFileTTF("assets/fonts/visitor.ttf", 16, fontConfig);
+            fontAtlas.addFontFromFileTTF("assets/fonts/visitor.ttf", 12, fontConfig);
             fontConfig.destroy(); // After all fonts were added we don't need this config more
         }
 
@@ -163,19 +176,20 @@ public class ImGUILayer {
         imGuiGl3.init("#version 330 core");
     }
 
-    private void startFrame(final float deltaTime) {
+    private void startFrame() {
         imGuiGlfw.newFrame();
         ImGui.newFrame();
     }
 
-    public void update(float dT) {
-        startFrame(dT);
+    public void update() {
+        startFrame();
         setupDockSpace();
         Container.getEnv().imgui();
         //ImGui.showDemoWindow();
         viewPortWindow.imgui();
         propertiesWindow.imgui();
         envHierarchyWindow.imgui();
+        cameraWindow.imgui();
         endFrame();
     }
 

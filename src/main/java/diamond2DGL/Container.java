@@ -1,6 +1,5 @@
 package diamond2DGL;
 
-import diamond2DGL.environments.Environment;
 import diamond2DGL.observers.EventSystem;
 import diamond2DGL.observers.handlers.EditorEventHandler;
 import diamond2DGL.renderer.DebugDraw;
@@ -20,7 +19,7 @@ public class Container {
     private boolean editorPlaying = false;
 
     // CONSTRUCTOR
-    public Container(Game game) {
+    private Container(Game game) {
         this.running = false;
         this.game = game;
         this.window = Window.get();
@@ -34,7 +33,7 @@ public class Container {
     }
 
     public static Game getGame() {
-        return get().game;
+        return container.game;
     }
 
     public boolean isRunning() {
@@ -42,41 +41,51 @@ public class Container {
     }
 
     public static Environment getEnv() {
-        return get().game.getCurrentEnvironment();
+        return container.game.getCurrentEnvironment();
     }
 
     public static Camera getCamera() {
-        return get().game.getCurrentEnvironment().getCamera();
-    }
-
-    public static void playEditor() {
-        getEnv().getPhysics().getWorld().clearForces();
-        get().editorPlaying = true;
-    }
-
-    public static void stopEditor() {
-        get().editorPlaying = false;
+        return container.game.getCurrentEnvironment().getCamera();
     }
 
     // METHODS
-    private void dispose() {
-        this.getDisplay().close();
-    }
-
-    private boolean shouldClose() {
-        return glfwWindowShouldClose(this.window.getGlfwWindow());
-    }
-
+    /**
+     * Initializes the Container SINGLETON
+     *
+     * @param game: Instance of a game
+     */
     public static void init(Game game) {
         container = new Container(game);
     }
 
+    /**
+     * Returns the current instance of the container
+     *
+     * @return Current Container
+     */
     public static Container get() {
         return container;
     }
 
+    public static void playEditor() {
+        getEnv().getPhysics().getWorld().clearForces();
+        container.editorPlaying = true;
+    }
+
+    public static void stopEditor() {
+        container.editorPlaying = false;
+    }
+
+    private void dispose() {
+        container.getDisplay().close();
+    }
+
+    private boolean shouldClose() {
+        return glfwWindowShouldClose(container.window.getGlfwWindow());
+    }
+
     public void stop() {
-        this.running = false;
+        container.running = false;
     }
 
     public void run() {
@@ -98,7 +107,7 @@ public class Container {
                 DebugDraw.beginFrame();
                 DebugDraw.draw();
             }
-            this.window.endFrame(dt);
+            this.window.endFrame();
             et = (float) glfwGetTime();
             dt = et - bt;
             bt = et;

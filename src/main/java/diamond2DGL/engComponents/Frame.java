@@ -1,5 +1,7 @@
 package diamond2DGL.engComponents;
 
+import diamond2DGL.renderer.Sprite;
+
 public class Frame {
 
     // ATTRIBUTES

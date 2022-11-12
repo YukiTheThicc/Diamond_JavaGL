@@ -17,6 +17,7 @@
         fColor = aColor;
         fTexCoords = aTexCoords;
         fTexId = aTexId;
+        // TODO: Move this to be done outside the shader program
         gl_Position = uProjection * uView * vec4(aPos, 1.0);
     }
 

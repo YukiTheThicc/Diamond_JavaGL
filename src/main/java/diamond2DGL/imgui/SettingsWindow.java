@@ -1,74 +1,15 @@
-package diamond2DGL.engComponents;
+package diamond2DGL.imgui;
 
-import diamond2DGL.Entity;
-import diamond2DGL.imgui.DiaImGui;
-import diamond2DGL.utils.General;
 import imgui.ImGui;
 import imgui.type.ImInt;
-import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import diamond2DGL.utils.General;
 
-public abstract class Component {
-
-    // ATTRIBUTES
-    private static int ID_COUNTER = 0;
-    public transient Entity parent = null;
-    private int uid = -1;
-
-    // METHODS
-    public void destroy() {}
-
-    public void start() {
-
-    }
-
-    public void editorUpdate(float dT) {
-
-    }
-
-    public void update(float dt) {
-
-    }
-
-    public void beginCollision(Entity entity, Contact contact, Vector2f normal) {
-
-    }
-
-    public void endCollision(Entity entity, Contact contact, Vector2f normal) {
-
-    }
-
-    public void preSolve(Entity entity, Contact contact, Vector2f normal) {
-
-    }
-
-    public void postSolve(Entity entity, Contact contact, Vector2f normal) {
-
-    }
-
-    private <T extends Enum<T>> String[] getEnumValues(Class<T> enumType) {
-        String[] enumValues = new String[enumType.getEnumConstants().length];
-        int i = 0;
-        for (T enumIntegerValue : enumType.getEnumConstants()) {
-            enumValues[i] = enumIntegerValue.name();
-            i++;
-        }
-        return enumValues;
-    }
-
-    public int indexOf(String str, String[] arr) {
-        for (int i = 0; i < arr.length; i++) {
-            if (str.equals(arr[i])) {
-                return i;
-            }
-        }
-        return -1;
-    }
+public class SettingsWindow {
 
     public void imgui() {
         try {
@@ -131,19 +72,5 @@ public abstract class Component {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
-    }
-
-    public void generateId () {
-        if (this.uid == -1) {
-            this.uid = ID_COUNTER++;
-        }
-    }
-
-    public int getUid () {
-        return this.uid;
-    }
-
-    public static void init(int maxId) {
-        ID_COUNTER = maxId;
     }
 }

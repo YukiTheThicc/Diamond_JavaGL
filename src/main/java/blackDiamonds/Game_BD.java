@@ -1,8 +1,8 @@
 package blackDiamonds;
 
 import diamond2DGL.Game;
-import diamond2DGL.environments.Environment;
-import diamond2DGL.environments.EnvironmentFactory;
+import diamond2DGL.Environment;
+import diamond2DGL.EnvironmentFactory;
 
 public class Game_BD extends Game {
 
@@ -11,11 +11,11 @@ public class Game_BD extends Game {
     }
 
     @Override
-    public void selectEnvironment(EnvironmentFactory factory) {
+    public void selectEnvironment(EnvironmentFactory factory, String name) {
         if (currentEnvironment != null) {
             currentEnvironment.destroy();
         }
-        currentEnvironment = new Environment(factory);
+        currentEnvironment = new Environment(factory, name);
         this.getCurrentEnvironment().load();
         this.getCurrentEnvironment().init();
         this.getCurrentEnvironment().start();

@@ -4,7 +4,7 @@ import diamond2DGL.Container;
 import diamond2DGL.Window;
 import diamond2DGL.Entity;
 import diamond2DGL.renderer.PickingTexture;
-import diamond2DGL.environments.Environment;
+import diamond2DGL.Environment;
 import diamond2DGL.listeners.KeyListener;
 import diamond2DGL.listeners.MouseListener;
 import diamond2DGL.renderer.DebugDraw;

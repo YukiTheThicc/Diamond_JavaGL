@@ -115,6 +115,12 @@ public class Shader {
         glUseProgram(0);
     }
 
+    /*
+    public void uploadTransformationMatrix(String name, Matrix4f uView, Matrix4f uProj, Vector4f ) {
+
+    }
+    */
+
     public void uploadMat4f(String name, Matrix4f mat) {
         int location = glGetUniformLocation(shaderProgramID, name);
         use();

@@ -44,7 +44,7 @@ public class GridLines extends Component {
                     DebugDraw.addLine(new Vector2f(x, firstY), new Vector2f(x, height + firstY + 1), color);
                 }
             }
-            System.out.println("firstX: " + firstX + ", firstY: " + firstY + ", X: " + x + ", Y: " + y);
+            //System.out.println("firstX: " + firstX + ", firstY: " + firstY + ", X: " + x + ", Y: " + y);
         }
     }
 }

@@ -18,7 +18,7 @@ import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 public class DebugDraw {
 
     // ATTRIBUTES
-    private static int MAX_LINES = 2048;
+    private static int MAX_LINES = 200;
     private static List<Line> lines = new ArrayList<>();
     private static float[] vertexArray = new float[MAX_LINES * 6 * 2];
     private static Shader shader = AssetManager.getShader("assets/shaders/debugLine2D.glsl");
@@ -27,7 +27,7 @@ public class DebugDraw {
     private static int vboID;
     private static boolean started = false;
 
-    // CONSTRUCTORS
+    // METHODS
     public static void start() {
         vaoID = glGenVertexArrays();
         glBindVertexArray(vaoID);
@@ -43,7 +43,6 @@ public class DebugDraw {
         glLineWidth(2.0f);
     }
 
-    // METHODS
     public static void beginFrame() {
         if (!started) {
             start();
@@ -61,11 +60,11 @@ public class DebugDraw {
     //  ADD LINES
     // =================================================================================================================
     public static void addLine(Vector2f from, Vector2f to) {
-        addLine(from, to, new Vector3f(0, 1, 0), 2);
+        addLine(from, to, new Vector3f(0, 1, 0), 1);
     }
 
     public static void addLine(Vector2f from, Vector2f to, Vector3f color) {
-        addLine(from, to, color, 2);
+        addLine(from, to, color, 1);
     }
 
     public static void addLine(Vector2f from, Vector2f to, Vector3f color, int lifetime) {

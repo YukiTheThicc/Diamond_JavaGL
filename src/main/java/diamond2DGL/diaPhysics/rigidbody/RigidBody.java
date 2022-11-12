@@ -1,4 +1,4 @@
-package diamond2DGL.DiaPhysics.rigidbody;
+package diamond2DGL.diaPhysics.rigidbody;
 
 import diamond2DGL.engComponents.Component;
 import org.joml.Vector2f;

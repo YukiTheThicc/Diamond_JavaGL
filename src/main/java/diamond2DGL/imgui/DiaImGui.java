@@ -1,4 +1,4 @@
-package diamond2DGL.editor;
+package diamond2DGL.imgui;
 
 import imgui.ImGui;
 import imgui.flag.ImGuiCol;

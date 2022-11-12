@@ -1,4 +1,4 @@
-package diamond2DGL.editor;
+package diamond2DGL.imgui;
 
 import diamond2DGL.Container;
 import diamond2DGL.Entity;

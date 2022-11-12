@@ -1,6 +1,6 @@
-package diamond2DGL.DiaPhysics;
+package diamond2DGL.diaPhysics;
 
-import diamond2DGL.DiaPhysics.primitives.*;
+import diamond2DGL.diaPhysics.primitives.*;
 import diamond2DGL.renderer.Line;
 import diamond2DGL.utils.DiaMath;
 import org.joml.Vector2f;

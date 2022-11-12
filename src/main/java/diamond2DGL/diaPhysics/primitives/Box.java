@@ -1,6 +1,6 @@
-package diamond2DGL.DiaPhysics.primitives;
+package diamond2DGL.diaPhysics.primitives;
 
-import diamond2DGL.DiaPhysics.rigidbody.RigidBody;
+import diamond2DGL.diaPhysics.rigidbody.RigidBody;
 import org.joml.Vector2f;
 
 public class Box {

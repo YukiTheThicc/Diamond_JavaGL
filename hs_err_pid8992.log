@@ -95,7 +95,7 @@ j  org.lwjgl.opengl.GL11C.glReadPixels(IIIIII[F)V+32
 j  org.lwjgl.opengl.GL11.glReadPixels(IIIIII[F)V+10
 j  diamond2DGL.renderer.PickingTexture.readPixels(Lorg/joml/Vector2i;Lorg/joml/Vector2i;)[F+73
 j  diamond2DGL.engComponents.MouseControls.editorUpdate(F)V+580
-J 1445 C2 diamond2DGL.environments.Environment.editorUpdate(F)V (85 bytes) @ 0x0000000002f0a8dc [0x0000000002f0a700+0x1dc]
+J 1445 C2 diamond2DGL.Environment.editorUpdate(F)V (85 bytes) @ 0x0000000002f0a8dc [0x0000000002f0a700+0x1dc]
 J 1368 C1 diamond2DGL.Game.editorUpdate(F)V (9 bytes) @ 0x0000000002ea56ac [0x0000000002ea5600+0xac]
 j  diamond2DGL.Container.run()V+63
 j  diamond2DGL.Game.start()V+3

@@ -25,11 +25,11 @@ public class Renderer {
         return currentShader;
     }
 
+    // METHODS
     public static void bindShader(Shader shader) {
         currentShader = shader;
     }
 
-    // METHODS
     public void add(Entity e) {
         SpriteRenderer spr = e.getComponent(SpriteRenderer.class);
         if (spr != null) {

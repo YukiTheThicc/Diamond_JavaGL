@@ -2,7 +2,7 @@ package diamond2DGL.engComponents;
 
 import diamond2DGL.Container;
 import diamond2DGL.Entity;
-import diamond2DGL.editor.PropertiesWindow;
+import diamond2DGL.imgui.PropertiesWindow;
 import diamond2DGL.listeners.KeyListener;
 import diamond2DGL.Window;
 import diamond2DGL.utils.Settings;

@@ -1,11 +1,10 @@
-package diamond2DGL.editor;
+package diamond2DGL.imgui;
 
 import diamond2DGL.Entity;
 import diamond2DGL.engComponents.SpriteRenderer;
 import diamond2DGL.physics.components.BoxCollider;
 import diamond2DGL.physics.components.CircleCollider;
 import diamond2DGL.physics.components.RigidBody;
-import diamond2DGL.renderer.PickingTexture;
 import imgui.ImGui;
 import org.joml.Vector4f;
 
@@ -18,13 +17,11 @@ public class PropertiesWindow {
     private List<Entity> activeEntities;
     private List<Vector4f> activeEntitiesColors;
     private Entity activeEntity = null;
-    private PickingTexture pickingTexture;
 
     // CONSTRUCTORS
-    public PropertiesWindow(PickingTexture pickingTexture) {
+    public PropertiesWindow() {
         this.activeEntities = new ArrayList<>();
         this.activeEntitiesColors = new ArrayList<>();
-        this.pickingTexture = pickingTexture;
     }
 
     // GETTERS & SETTERS

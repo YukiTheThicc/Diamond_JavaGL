@@ -1,4 +1,4 @@
-package diamond2DGL.engComponents;
+package diamond2DGL.renderer;
 
 import diamond2DGL.renderer.Texture;
 import org.joml.Vector2f;

@@ -1,6 +1,7 @@
 package diamond2DGL.engComponents;
 
-import diamond2DGL.editor.DiaImGui;
+import diamond2DGL.imgui.DiaImGui;
+import diamond2DGL.renderer.Sprite;
 import diamond2DGL.renderer.Texture;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -16,18 +17,6 @@ public class SpriteRenderer extends Component {
     public SpriteRenderer() {
 
     }
-
-//    public SpriteRenderer(Vector4f color) {
-//        this.color = color;
-//        this.sprite = new Sprite(null);
-//        this.hasChanged = true;
-//    }
-//
-//    public SpriteRenderer(Sprite sprite) {
-//        this.sprite = sprite;
-//        this.color = new Vector4f(1, 1, 1, 1);
-//        this.hasChanged = true;
-//    }
 
     // GETTERS & SETTERS
     public Vector4f getColor() {

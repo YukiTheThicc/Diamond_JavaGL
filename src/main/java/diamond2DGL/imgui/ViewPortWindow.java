@@ -1,4 +1,4 @@
-package diamond2DGL.editor;
+package diamond2DGL.imgui;
 
 import diamond2DGL.Window;
 import diamond2DGL.listeners.MouseListener;
@@ -56,7 +56,7 @@ public class ViewPortWindow {
 
         int textureId = Window.getFrameBuffer().getTextureID();
         ImGui.image(textureId, sizeX, sizeY, 0, 1, 1, 0);
-        //System.out.println("SizeX: " + sizeX + ", SizeY: " + sizeY);
+        System.out.println("--ViewPort-- SizeX: " + sizeX + ", SizeY: " + sizeY);
 
         MouseListener.setGameViewportPos(new Vector2f(windowPos.x + 8, windowPos.y + 26));
         MouseListener.setGameViewportSize(new Vector2f(sizeX, sizeY));

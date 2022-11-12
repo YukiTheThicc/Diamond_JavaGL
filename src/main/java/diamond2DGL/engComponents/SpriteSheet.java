@@ -1,5 +1,6 @@
 package diamond2DGL.engComponents;
 
+import diamond2DGL.renderer.Sprite;
 import diamond2DGL.renderer.Texture;
 import org.joml.Vector2f;
 

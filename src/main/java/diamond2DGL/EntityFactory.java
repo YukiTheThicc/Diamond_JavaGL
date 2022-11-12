@@ -4,6 +4,7 @@ import diamond2DGL.engComponents.*;
 import diamond2DGL.physics.components.BoxCollider;
 import diamond2DGL.physics.components.RigidBody;
 import diamond2DGL.physics.enums.BodyType;
+import diamond2DGL.renderer.Sprite;
 import diamond2DGL.utils.AssetManager;
 import org.joml.Vector2f;
 
