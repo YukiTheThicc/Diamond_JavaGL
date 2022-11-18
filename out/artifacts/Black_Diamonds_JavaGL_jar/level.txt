@@ -1,7 +1,7 @@
 [
   {
     "name": "Sprite_Entity",
-    "uid": 297,
+    "uid": 0,
     "components": [
       {
         "type": "diamond2DGL.engComponents.Transform",
@@ -238,7 +238,7 @@
   },
   {
     "name": "Sprite_Entity",
-    "uid": 298,
+    "uid": 1,
     "components": [
       {
         "type": "diamond2DGL.engComponents.Transform",
@@ -339,7 +339,7 @@
   },
   {
     "name": "Sprite_Entity",
-    "uid": 299,
+    "uid": 2,
     "components": [
       {
         "type": "diamond2DGL.engComponents.Transform",
@@ -440,7 +440,7 @@
   },
   {
     "name": "Sprite_Entity",
-    "uid": 300,
+    "uid": 3,
     "components": [
       {
         "type": "diamond2DGL.engComponents.Transform",
@@ -541,7 +541,7 @@
   },
   {
     "name": "Sprite_Entity",
-    "uid": 301,
+    "uid": 4,
     "components": [
       {
         "type": "diamond2DGL.engComponents.Transform",
@@ -642,7 +642,7 @@
   },
   {
     "name": "Sprite_Entity",
-    "uid": 302,
+    "uid": 5,
     "components": [
       {
         "type": "diamond2DGL.engComponents.Transform",
@@ -743,7 +743,7 @@
   },
   {
     "name": "Sprite_Entity",
-    "uid": 303,
+    "uid": 6,
     "components": [
       {
         "type": "diamond2DGL.engComponents.Transform",
@@ -844,7 +844,7 @@
   },
   {
     "name": "Sprite_Entity",
-    "uid": 304,
+    "uid": 7,
     "components": [
       {
         "type": "diamond2DGL.engComponents.Transform",
@@ -945,7 +945,7 @@
   },
   {
     "name": "Sprite_Entity",
-    "uid": 305,
+    "uid": 8,
     "components": [
       {
         "type": "diamond2DGL.engComponents.Transform",
@@ -1046,7 +1046,7 @@
   },
   {
     "name": "Sprite_Entity",
-    "uid": 306,
+    "uid": 9,
     "components": [
       {
         "type": "diamond2DGL.engComponents.Transform",
@@ -1147,7 +1147,7 @@
   },
   {
     "name": "Sprite_Entity",
-    "uid": 307,
+    "uid": 10,
     "components": [
       {
         "type": "diamond2DGL.engComponents.Transform",
@@ -1248,7 +1248,7 @@
   },
   {
     "name": "Sprite_Entity",
-    "uid": 308,
+    "uid": 11,
     "components": [
       {
         "type": "diamond2DGL.engComponents.Transform",
@@ -1349,7 +1349,7 @@
   },
   {
     "name": "Sprite_Entity",
-    "uid": 309,
+    "uid": 12,
     "components": [
       {
         "type": "diamond2DGL.engComponents.Transform",
@@ -1450,7 +1450,7 @@
   },
   {
     "name": "Sprite_Entity",
-    "uid": 310,
+    "uid": 13,
     "components": [
       {
         "type": "diamond2DGL.engComponents.Transform",
@@ -1551,7 +1551,7 @@
   },
   {
     "name": "Sprite_Entity",
-    "uid": 311,
+    "uid": 14,
     "components": [
       {
         "type": "diamond2DGL.engComponents.Transform",
@@ -1652,7 +1652,7 @@
   },
   {
     "name": "Sprite_Entity",
-    "uid": 312,
+    "uid": 15,
     "components": [
       {
         "type": "diamond2DGL.engComponents.Transform",
@@ -1753,7 +1753,7 @@
   },
   {
     "name": "Sprite_Entity",
-    "uid": 313,
+    "uid": 16,
     "components": [
       {
         "type": "diamond2DGL.engComponents.Transform",
@@ -1854,7 +1854,7 @@
   },
   {
     "name": "Sprite_Entity",
-    "uid": 314,
+    "uid": 17,
     "components": [
       {
         "type": "diamond2DGL.engComponents.Transform",
@@ -1955,7 +1955,7 @@
   },
   {
     "name": "Sprite_Entity",
-    "uid": 315,
+    "uid": 18,
     "components": [
       {
         "type": "diamond2DGL.engComponents.Transform",
@@ -2056,7 +2056,7 @@
   },
   {
     "name": "Sprite_Entity",
-    "uid": 316,
+    "uid": 19,
     "components": [
       {
         "type": "diamond2DGL.engComponents.Transform",
@@ -2157,7 +2157,7 @@
   },
   {
     "name": "Sprite_Entity",
-    "uid": 317,
+    "uid": 20,
     "components": [
       {
         "type": "diamond2DGL.engComponents.Transform",
@@ -2258,7 +2258,7 @@
   },
   {
     "name": "Sprite_Entity",
-    "uid": 318,
+    "uid": 21,
     "components": [
       {
         "type": "diamond2DGL.engComponents.Transform",
@@ -2359,7 +2359,7 @@
   },
   {
     "name": "Sprite_Entity",
-    "uid": 319,
+    "uid": 22,
     "components": [
       {
         "type": "diamond2DGL.engComponents.Transform",
@@ -2460,7 +2460,7 @@
   },
   {
     "name": "Sprite_Entity",
-    "uid": 320,
+    "uid": 23,
     "components": [
       {
         "type": "diamond2DGL.engComponents.Transform",
@@ -2561,7 +2561,7 @@
   },
   {
     "name": "Sprite_Entity",
-    "uid": 321,
+    "uid": 24,
     "components": [
       {
         "type": "diamond2DGL.engComponents.Transform",
@@ -2662,7 +2662,7 @@
   },
   {
     "name": "Sprite_Entity",
-    "uid": 322,
+    "uid": 25,
     "components": [
       {
         "type": "diamond2DGL.engComponents.Transform",
@@ -2763,7 +2763,7 @@
   },
   {
     "name": "Sprite_Entity",
-    "uid": 323,
+    "uid": 26,
     "components": [
       {
         "type": "diamond2DGL.engComponents.Transform",
@@ -2864,7 +2864,7 @@
   },
   {
     "name": "Sprite_Entity",
-    "uid": 324,
+    "uid": 27,
     "components": [
       {
         "type": "diamond2DGL.engComponents.Transform",
@@ -2965,7 +2965,7 @@
   },
   {
     "name": "Sprite_Entity",
-    "uid": 325,
+    "uid": 28,
     "components": [
       {
         "type": "diamond2DGL.engComponents.Transform",

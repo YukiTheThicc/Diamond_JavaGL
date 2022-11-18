@@ -4,6 +4,9 @@ import org.joml.Vector2f;
 
 public class DiaMath {
 
+    /*
+    * This class is to be used as part of the custom Diamond Physics Engine
+    */
     public static void rotate(Vector2f vec, float degrees, Vector2f origin) {
         float x = vec.x - origin.x;
         float y = vec.y - origin.y;
